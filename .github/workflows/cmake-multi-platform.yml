@@ -51,7 +51,8 @@ jobs:
         submodules: recursive
     
     # Install some dependencies for the program to work
-    - name: Install dependencies
+    - if: matrix.os != 'window-latest'
+      name: Install dependencies
       shell: bash
       run: |
         sudo apt-get update
