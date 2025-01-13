@@ -45,6 +45,8 @@ target_include_directories(${PROJECT_NAME}
     
     ${CMAKE_SOURCE_DIR}/src/controller
     ${CMAKE_SOURCE_DIR}/src/systems
+    ${CMAKE_SOURCE_DIR}/src/components
+    ${CMAKE_SOURCE_DIR}/src/entity
 )
 
 # Link libs

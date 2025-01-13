@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj"
   "CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj.d"
+  "CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.obj"
+  "CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.obj.d"
   "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj"
   "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj.d"
   "CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"

@@ -179,6 +179,30 @@ src/controller/app.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.s
 .PHONY : src/controller/app.cpp.s
 
+src/entity/ecs_manager.obj: src/entity/ecs_manager.cpp.obj
+.PHONY : src/entity/ecs_manager.obj
+
+# target to build an object file
+src/entity/ecs_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.obj
+.PHONY : src/entity/ecs_manager.cpp.obj
+
+src/entity/ecs_manager.i: src/entity/ecs_manager.cpp.i
+.PHONY : src/entity/ecs_manager.i
+
+# target to preprocess a source file
+src/entity/ecs_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.i
+.PHONY : src/entity/ecs_manager.cpp.i
+
+src/entity/ecs_manager.s: src/entity/ecs_manager.cpp.s
+.PHONY : src/entity/ecs_manager.s
+
+# target to generate assembly for a file
+src/entity/ecs_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.s
+.PHONY : src/entity/ecs_manager.cpp.s
+
 src/glad.obj: src/glad.c.obj
 .PHONY : src/glad.obj
 
@@ -289,6 +313,9 @@ help:
 	@echo ... src/controller/app.obj
 	@echo ... src/controller/app.i
 	@echo ... src/controller/app.s
+	@echo ... src/entity/ecs_manager.obj
+	@echo ... src/entity/ecs_manager.i
+	@echo ... src/entity/ecs_manager.s
 	@echo ... src/glad.obj
 	@echo ... src/glad.i
 	@echo ... src/glad.s

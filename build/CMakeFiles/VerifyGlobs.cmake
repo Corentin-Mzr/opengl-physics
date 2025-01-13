@@ -16,6 +16,7 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/*.cpp")
 set(OLD_GLOB
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp"
+  "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/entity/ecs_manager.cpp"
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp"
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/physics_system.cpp"
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/render_system.cpp"
