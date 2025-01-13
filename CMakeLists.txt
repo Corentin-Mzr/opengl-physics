@@ -42,6 +42,8 @@ target_include_directories(${PROJECT_NAME}
     ${DEPS_DIR}/glfw/include
     ${DEPS_DIR}/glm/glm
     ${DEPS_DIR}
+    
+    ${CMAKE_SOURCE_DIR}/src/controller
 )
 
 # Link libs

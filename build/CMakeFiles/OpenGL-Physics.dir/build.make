@@ -71,11 +71,26 @@ include CMakeFiles/OpenGL-Physics.dir/flags.make
 CMakeFiles/OpenGL-Physics.dir/codegen:
 .PHONY : CMakeFiles/OpenGL-Physics.dir/codegen
 
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj: CMakeFiles/OpenGL-Physics.dir/flags.make
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj: CMakeFiles/OpenGL-Physics.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj: CMakeFiles/OpenGL-Physics.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj -MF CMakeFiles\OpenGL-Physics.dir\src\controller\app.cpp.obj.d -o CMakeFiles\OpenGL-Physics.dir\src\controller\app.cpp.obj -c C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\controller\app.cpp
+
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.i"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\controller\app.cpp > CMakeFiles\OpenGL-Physics.dir\src\controller\app.cpp.i
+
+CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.s"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\controller\app.cpp -o CMakeFiles\OpenGL-Physics.dir\src\controller\app.cpp.s
+
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj: CMakeFiles/OpenGL-Physics.dir/flags.make
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj: CMakeFiles/OpenGL-Physics.dir/includes_C.rsp
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/glad.c
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj: CMakeFiles/OpenGL-Physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj"
 	C:\MinGW\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj -MF CMakeFiles\OpenGL-Physics.dir\src\glad.c.obj.d -o CMakeFiles\OpenGL-Physics.dir\src\glad.c.obj -c C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\glad.c
 
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.i: cmake_force
@@ -90,7 +105,7 @@ CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj: CMakeFiles/OpenGL-Physics.dir/fl
 CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj: CMakeFiles/OpenGL-Physics.dir/includes_CXX.rsp
 CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp
 CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj: CMakeFiles/OpenGL-Physics.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"
 	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj -MF CMakeFiles\OpenGL-Physics.dir\src\main.cpp.obj.d -o CMakeFiles\OpenGL-Physics.dir\src\main.cpp.obj -c C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\main.cpp
 
 CMakeFiles/OpenGL-Physics.dir/src/main.cpp.i: cmake_force
@@ -103,12 +118,14 @@ CMakeFiles/OpenGL-Physics.dir/src/main.cpp.s: cmake_force
 
 # Object files for target OpenGL-Physics
 OpenGL__Physics_OBJECTS = \
+"CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj" \
 "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj" \
 "CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"
 
 # External object files for target OpenGL-Physics
 OpenGL__Physics_EXTERNAL_OBJECTS =
 
+OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/build.make
@@ -116,7 +133,7 @@ OpenGL-Physics.exe: dependencies/glfw/src/libglfw3.a
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/linkLibs.rsp
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/objects1.rsp
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable OpenGL-Physics.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable OpenGL-Physics.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\OpenGL-Physics.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

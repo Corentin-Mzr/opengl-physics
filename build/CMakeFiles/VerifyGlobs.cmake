@@ -15,6 +15,7 @@ endif()
 # SOURCES at CMakeLists.txt:31 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/*.cpp")
 set(OLD_GLOB
+  "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp"
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

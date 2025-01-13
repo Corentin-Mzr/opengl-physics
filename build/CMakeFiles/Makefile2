@@ -168,12 +168,12 @@ dependencies/glm/glm/clean:
 CMakeFiles/OpenGL-Physics.dir/all: dependencies/glfw/src/CMakeFiles/glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=1,2,3 "Built target OpenGL-Physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=1,2,3,4 "Built target OpenGL-Physics"
 .PHONY : CMakeFiles/OpenGL-Physics.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/OpenGL-Physics.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles 25
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles 26
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/OpenGL-Physics.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles 0
 .PHONY : CMakeFiles/OpenGL-Physics.dir/rule
@@ -185,7 +185,7 @@ OpenGL-Physics: CMakeFiles/OpenGL-Physics.dir/rule
 # codegen rule for target.
 CMakeFiles/OpenGL-Physics.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=1,2,3 "Finished codegen for target OpenGL-Physics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target OpenGL-Physics"
 .PHONY : CMakeFiles/OpenGL-Physics.dir/codegen
 
 # clean rule for target.
@@ -200,7 +200,7 @@ CMakeFiles/OpenGL-Physics.dir/clean:
 dependencies/glfw/src/CMakeFiles/glfw.dir/all:
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\glfw.dir\build.make dependencies/glfw/src/CMakeFiles/glfw.dir/depend
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\glfw.dir\build.make dependencies/glfw/src/CMakeFiles/glfw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 "Built target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 "Built target glfw"
 .PHONY : dependencies/glfw/src/CMakeFiles/glfw.dir/all
 
 # Build rule for subdir invocation for target.
@@ -217,7 +217,7 @@ glfw: dependencies/glfw/src/CMakeFiles/glfw.dir/rule
 # codegen rule for target.
 dependencies/glfw/src/CMakeFiles/glfw.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\glfw.dir\build.make dependencies/glfw/src/CMakeFiles/glfw.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 "Finished codegen for target glfw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 "Finished codegen for target glfw"
 .PHONY : dependencies/glfw/src/CMakeFiles/glfw.dir/codegen
 
 # clean rule for target.
@@ -232,7 +232,7 @@ dependencies/glfw/src/CMakeFiles/glfw.dir/clean:
 dependencies/glfw/src/CMakeFiles/update_mappings.dir/all:
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\update_mappings.dir\build.make dependencies/glfw/src/CMakeFiles/update_mappings.dir/depend
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\update_mappings.dir\build.make dependencies/glfw/src/CMakeFiles/update_mappings.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=26 "Built target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=27 "Built target update_mappings"
 .PHONY : dependencies/glfw/src/CMakeFiles/update_mappings.dir/all
 
 # Build rule for subdir invocation for target.
@@ -249,7 +249,7 @@ update_mappings: dependencies/glfw/src/CMakeFiles/update_mappings.dir/rule
 # codegen rule for target.
 dependencies/glfw/src/CMakeFiles/update_mappings.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\update_mappings.dir\build.make dependencies/glfw/src/CMakeFiles/update_mappings.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=26 "Finished codegen for target update_mappings"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=27 "Finished codegen for target update_mappings"
 .PHONY : dependencies/glfw/src/CMakeFiles/update_mappings.dir/codegen
 
 # clean rule for target.

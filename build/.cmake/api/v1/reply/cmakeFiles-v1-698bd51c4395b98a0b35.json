@@ -13,6 +13,7 @@
 			"expression" : "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/*.cpp",
 			"paths" : 
 			[
+				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp",
 				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp"
 			],
 			"recurse" : true

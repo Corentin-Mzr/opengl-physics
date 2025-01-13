@@ -155,6 +155,30 @@ update_mappings/fast:
 	$(MAKE) $(MAKESILENT) -f dependencies\glfw\src\CMakeFiles\update_mappings.dir\build.make dependencies/glfw/src/CMakeFiles/update_mappings.dir/build
 .PHONY : update_mappings/fast
 
+src/controller/app.obj: src/controller/app.cpp.obj
+.PHONY : src/controller/app.obj
+
+# target to build an object file
+src/controller/app.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj
+.PHONY : src/controller/app.cpp.obj
+
+src/controller/app.i: src/controller/app.cpp.i
+.PHONY : src/controller/app.i
+
+# target to preprocess a source file
+src/controller/app.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.i
+.PHONY : src/controller/app.cpp.i
+
+src/controller/app.s: src/controller/app.cpp.s
+.PHONY : src/controller/app.s
+
+# target to generate assembly for a file
+src/controller/app.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.s
+.PHONY : src/controller/app.cpp.s
+
 src/glad.obj: src/glad.c.obj
 .PHONY : src/glad.obj
 
@@ -214,6 +238,9 @@ help:
 	@echo ... update_mappings
 	@echo ... OpenGL-Physics
 	@echo ... glfw
+	@echo ... src/controller/app.obj
+	@echo ... src/controller/app.i
+	@echo ... src/controller/app.s
 	@echo ... src/glad.obj
 	@echo ... src/glad.i
 	@echo ... src/glad.s
