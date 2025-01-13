@@ -63,7 +63,9 @@ jobs:
       id: strings
       shell: bash
       run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        build_output_dir="${{ github.workspace }}/build"
+        build_output_dir=$(echo "$build_output_dir" | sed 's|\\|/|g')
+        echo "build-output-dir=$build_output_dir" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
