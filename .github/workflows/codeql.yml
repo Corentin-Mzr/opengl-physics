@@ -87,7 +87,7 @@ jobs:
       shell: bash
       run: |
         rm -rf build
-        cmake -S . -B build -DGLFW_BUILD_WAYLAND=OFF -GLFW_BUILD_X11=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        cmake -S . -B build -DGLFW_BUILD_WAYLAND=OFF -DGLFW_BUILD_X11=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         cmake --build build
 
     - name: Perform CodeQL Analysis
