@@ -62,7 +62,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libgl1-mesa-dev libwayland-dev
+        sudo apt-get install -y libgl1-mesa-dev
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -87,7 +87,7 @@ jobs:
       shell: bash
       run: |
         rm -rf build
-        cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        cmake -S . -B build -DGLFW_USE_WAYLAND=OFF -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         cmake --build build
 
     - name: Perform CodeQL Analysis
