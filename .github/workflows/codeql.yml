@@ -79,7 +79,8 @@ jobs:
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
-        cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        rm -rf build
+        cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
         cmake --build build
 
     - name: Perform CodeQL Analysis
