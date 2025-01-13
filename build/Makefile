@@ -227,6 +227,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/systems/physics_system.obj: src/systems/physics_system.cpp.obj
+.PHONY : src/systems/physics_system.obj
+
+# target to build an object file
+src/systems/physics_system.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj
+.PHONY : src/systems/physics_system.cpp.obj
+
+src/systems/physics_system.i: src/systems/physics_system.cpp.i
+.PHONY : src/systems/physics_system.i
+
+# target to preprocess a source file
+src/systems/physics_system.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.i
+.PHONY : src/systems/physics_system.cpp.i
+
+src/systems/physics_system.s: src/systems/physics_system.cpp.s
+.PHONY : src/systems/physics_system.s
+
+# target to generate assembly for a file
+src/systems/physics_system.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.s
+.PHONY : src/systems/physics_system.cpp.s
+
+src/systems/render_system.obj: src/systems/render_system.cpp.obj
+.PHONY : src/systems/render_system.obj
+
+# target to build an object file
+src/systems/render_system.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj
+.PHONY : src/systems/render_system.cpp.obj
+
+src/systems/render_system.i: src/systems/render_system.cpp.i
+.PHONY : src/systems/render_system.i
+
+# target to preprocess a source file
+src/systems/render_system.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.i
+.PHONY : src/systems/render_system.cpp.i
+
+src/systems/render_system.s: src/systems/render_system.cpp.s
+.PHONY : src/systems/render_system.s
+
+# target to generate assembly for a file
+src/systems/render_system.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\OpenGL-Physics.dir\build.make CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.s
+.PHONY : src/systems/render_system.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -247,6 +295,12 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/systems/physics_system.obj
+	@echo ... src/systems/physics_system.i
+	@echo ... src/systems/physics_system.s
+	@echo ... src/systems/render_system.obj
+	@echo ... src/systems/render_system.i
+	@echo ... src/systems/render_system.s
 .PHONY : help
 
 

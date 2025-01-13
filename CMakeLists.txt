@@ -44,6 +44,7 @@ target_include_directories(${PROJECT_NAME}
     ${DEPS_DIR}
     
     ${CMAKE_SOURCE_DIR}/src/controller
+    ${CMAKE_SOURCE_DIR}/src/systems
 )
 
 # Link libs

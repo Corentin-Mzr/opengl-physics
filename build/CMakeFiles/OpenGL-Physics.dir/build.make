@@ -116,11 +116,43 @@ CMakeFiles/OpenGL-Physics.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-Physics.dir/src/main.cpp.s"
 	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\main.cpp -o CMakeFiles\OpenGL-Physics.dir\src\main.cpp.s
 
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/flags.make
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/physics_system.cpp
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj -MF CMakeFiles\OpenGL-Physics.dir\src\systems\physics_system.cpp.obj.d -o CMakeFiles\OpenGL-Physics.dir\src\systems\physics_system.cpp.obj -c C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\physics_system.cpp
+
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.i"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\physics_system.cpp > CMakeFiles\OpenGL-Physics.dir\src\systems\physics_system.cpp.i
+
+CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.s"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\physics_system.cpp -o CMakeFiles\OpenGL-Physics.dir\src\systems\physics_system.cpp.s
+
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/flags.make
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/includes_CXX.rsp
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/render_system.cpp
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj: CMakeFiles/OpenGL-Physics.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj -MF CMakeFiles\OpenGL-Physics.dir\src\systems\render_system.cpp.obj.d -o CMakeFiles\OpenGL-Physics.dir\src\systems\render_system.cpp.obj -c C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\render_system.cpp
+
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.i"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\render_system.cpp > CMakeFiles\OpenGL-Physics.dir\src\systems\render_system.cpp.i
+
+CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.s"
+	C:\MinGW\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\src\systems\render_system.cpp -o CMakeFiles\OpenGL-Physics.dir\src\systems\render_system.cpp.s
+
 # Object files for target OpenGL-Physics
 OpenGL__Physics_OBJECTS = \
 "CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj" \
 "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj" \
-"CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"
+"CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj" \
+"CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj" \
+"CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj"
 
 # External object files for target OpenGL-Physics
 OpenGL__Physics_EXTERNAL_OBJECTS =
@@ -128,12 +160,14 @@ OpenGL__Physics_EXTERNAL_OBJECTS =
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj
+OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/systems/physics_system.cpp.obj
+OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/src/systems/render_system.cpp.obj
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/build.make
 OpenGL-Physics.exe: dependencies/glfw/src/libglfw3.a
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/linkLibs.rsp
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/objects1.rsp
 OpenGL-Physics.exe: CMakeFiles/OpenGL-Physics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable OpenGL-Physics.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\deads\Bureau\Jeux\github\cpp\opengl-physics\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable OpenGL-Physics.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\OpenGL-Physics.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

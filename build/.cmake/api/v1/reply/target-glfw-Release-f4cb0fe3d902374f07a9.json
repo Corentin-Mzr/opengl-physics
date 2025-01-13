@@ -95,7 +95,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=c99"
+					"fragment" : "-O3 -DNDEBUG -std=c99"
 				},
 				{
 					"backtrace" : 2,

@@ -17,6 +17,8 @@ file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/deads/Bureau/Jeux/gi
 set(OLD_GLOB
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp"
   "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp"
+  "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/physics_system.cpp"
+  "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/render_system.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

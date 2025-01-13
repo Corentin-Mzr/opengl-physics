@@ -1,3 +1,3 @@
 C:\Cmake\cmake-3.31.3-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\OpenGL-Physics.dir/objects.a
 C:\MinGW\mingw64\bin\ar.exe qc CMakeFiles\OpenGL-Physics.dir/objects.a @CMakeFiles\OpenGL-Physics.dir\objects1.rsp
-C:\MinGW\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\OpenGL-Physics.dir/objects.a -Wl,--no-whole-archive -o OpenGL-Physics.exe -Wl,--out-implib,libOpenGL-Physics.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\OpenGL-Physics.dir\linkLibs.rsp
+C:\MinGW\mingw64\bin\g++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\OpenGL-Physics.dir/objects.a -Wl,--no-whole-archive -o OpenGL-Physics.exe -Wl,--out-implib,libOpenGL-Physics.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\OpenGL-Physics.dir\linkLibs.rsp

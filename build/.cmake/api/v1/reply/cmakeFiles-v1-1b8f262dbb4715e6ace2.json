@@ -14,7 +14,9 @@
 			"paths" : 
 			[
 				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.cpp",
-				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp"
+				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp",
+				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/physics_system.cpp",
+				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/render_system.cpp"
 			],
 			"recurse" : true
 		}

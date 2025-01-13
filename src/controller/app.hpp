@@ -2,9 +2,13 @@
 
 #include <stdexcept>
 #include <string>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "physics_system.hpp"
+#include "render_system.hpp"
 
 /* 
 App class that will create a resizable window
@@ -24,11 +28,13 @@ public:
     void run();
 
 private:
-    GLFWwindow *window = nullptr;
+    std::shared_ptr<GLFWwindow> window = nullptr;
     std::string title = "";
     unsigned width = 0, height = 0;
     unsigned shader = 0;
     bool keys[1024] = {false};
+    RenderSystem render_system;
+    PhysicsSystem physics_system;
 
     // Initialize GLFW, if fail throw a std::runtime_error exception
     void setup_glfw();
@@ -44,6 +50,9 @@ private:
 
     // Define callback functions
     void setup_callbacks();
+
+    // Set up some systems
+    void setup_systems();
 
     // Define everything in the scene
     void setup_scene();

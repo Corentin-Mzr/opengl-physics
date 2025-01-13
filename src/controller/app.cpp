@@ -13,6 +13,8 @@ App::App(const unsigned width, const unsigned height, const char *title) : width
     setup_glad();
     setup_opengl();
     setup_callbacks();
+    setup_systems();
+    setup_scene();
 }
 
 App::~App()
@@ -24,15 +26,13 @@ App::~App()
 // Run the app
 void App::run()
 {
-    setup_scene();
-
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window.get()))
     {
         glfwPollEvents();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         process_input();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(window.get());
     }
 }
 
@@ -53,15 +53,20 @@ void App::setup_glfw()
 void App::setup_window()
 {
     // Create a window
-    window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
-    if (window == nullptr)
+    GLFWwindow *raw_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    if (raw_window == nullptr)
     {
         glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window");
     }
-    glfwMakeContextCurrent(window);
+
+    // Need to use a custom deleter
+    window = std::shared_ptr<GLFWwindow>(raw_window, [](GLFWwindow *ptr)
+                                         { glfwDestroyWindow(ptr); });
+
+    glfwMakeContextCurrent(window.get());
     glfwSwapInterval(1);
-    glfwSetWindowUserPointer(window, this);
+    glfwSetWindowUserPointer(window.get(), this);
 }
 
 // Load GLAD
@@ -93,10 +98,16 @@ void App::setup_opengl()
 void App::setup_callbacks()
 {
     // Define viewport callback
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window.get(), framebuffer_size_callback);
 
     // Define input callback
-    glfwSetKeyCallback(window, key_callback);
+    glfwSetKeyCallback(window.get(), key_callback);
+}
+
+// Set up some systems
+void App::setup_systems()
+{
+    render_system = RenderSystem(window);
 }
 
 // Define everything in the scene
