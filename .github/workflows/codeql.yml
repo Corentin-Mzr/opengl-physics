@@ -59,6 +59,7 @@ jobs:
       with:
         submodules: recursive
     
+    # Install some dependencies for the program to work
     - name: Install dependencies
       run: |
         sudo apt-get update
