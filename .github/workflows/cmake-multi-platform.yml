@@ -51,7 +51,7 @@ jobs:
         submodules: recursive
     
     # Install some dependencies for the program to work
-    - if: matrix.os != 'window-latest'
+    - if: matrix.os != 'windows-latest'
       name: Install dependencies
       shell: bash
       run: |
