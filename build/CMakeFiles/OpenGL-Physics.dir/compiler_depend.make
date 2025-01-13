@@ -148,6 +148,9 @@ CMakeFiles/OpenGL-Physics.dir/src/controller/app.cpp.obj: C:/Users/deads/Bureau/
   C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/render_system.hpp \
   C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.hpp
 
+CMakeFiles/OpenGL-Physics.dir/src/entity/ecs_manager.cpp.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/entity/ecs_manager.cpp \
+  C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/entity/ecs_manager.hpp
+
 CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj: C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/glad.c \
   C:/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h \
   C:/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/ammintrin.h \
@@ -881,6 +884,8 @@ C:/MinGW/mingw64/include/c++/13.1.0/debug/assertions.h:
 
 C:/MinGW/mingw64/x86_64-w64-mingw32/include/rpcnsi.h:
 
+C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/entity/ecs_manager.cpp:
+
 C:/MinGW/mingw64/include/c++/13.1.0/exception:
 
 C:/MinGW/mingw64/include/c++/13.1.0/ext/aligned_buffer.h:
@@ -1076,6 +1081,10 @@ C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/dependencies/glad/glad.h:
 C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/systems/physics_system.hpp:
 
 C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/controller/app.hpp:
+
+C:/MinGW/mingw64/x86_64-w64-mingw32/include/bcrypt.h:
+
+C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/entity/ecs_manager.hpp:
 
 C:/MinGW/mingw64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/adxintrin.h:
 
@@ -1288,8 +1297,6 @@ C:/MinGW/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h:
 C:/MinGW/mingw64/x86_64-w64-mingw32/include/rpcdcep.h:
 
 C:/MinGW/mingw64/x86_64-w64-mingw32/include/apisetcconv.h:
-
-C:/MinGW/mingw64/x86_64-w64-mingw32/include/bcrypt.h:
 
 C:/MinGW/mingw64/x86_64-w64-mingw32/include/wtypes.h:
 
