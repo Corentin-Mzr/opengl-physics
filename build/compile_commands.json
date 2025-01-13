@@ -1,6 +1,12 @@
 [
 {
   "directory": "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/build",
+  "command": "C:\\MinGW\\mingw64\\bin\\gcc.exe  @CMakeFiles/OpenGL-Physics.dir/includes_C.rsp -g -o CMakeFiles\\OpenGL-Physics.dir\\src\\glad.c.obj -c C:\\Users\\deads\\Bureau\\Jeux\\github\\cpp\\opengl-physics\\src\\glad.c",
+  "file": "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/glad.c",
+  "output": "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj"
+},
+{
+  "directory": "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/build",
   "command": "C:\\MinGW\\mingw64\\bin\\g++.exe  @CMakeFiles/OpenGL-Physics.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\OpenGL-Physics.dir\\src\\main.cpp.obj -c C:\\Users\\deads\\Bureau\\Jeux\\github\\cpp\\opengl-physics\\src\\main.cpp",
   "file": "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/main.cpp",
   "output": "CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"

@@ -40,7 +40,8 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME}
     PRIVATE
     ${DEPS_DIR}/glfw/include
-    ${DEPS_DIR}/glm
+    ${DEPS_DIR}/glm/glm
+    ${DEPS_DIR}
 )
 
 # Link libs

@@ -3,7 +3,10 @@
 	[
 		{
 			"expression" : "C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/*.c",
-			"paths" : [],
+			"paths" : 
+			[
+				"C:/Users/deads/Bureau/Jeux/github/cpp/opengl-physics/src/glad.c"
+			],
 			"recurse" : true
 		},
 		{

@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj"
+  "CMakeFiles/OpenGL-Physics.dir/src/glad.c.obj.d"
   "CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj"
   "CMakeFiles/OpenGL-Physics.dir/src/main.cpp.obj.d"
   "OpenGL-Physics.exe"
@@ -8,6 +10,6 @@ file(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang CXX)
+foreach(lang C CXX)
   include(CMakeFiles/OpenGL-Physics.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()
