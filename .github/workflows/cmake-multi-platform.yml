@@ -63,8 +63,8 @@ jobs:
       id: strings
       shell: bash
       run: |
-        build_output_dir="${{ github.workspace }}/build"
-        build_output_dir=$(echo "$build_output_dir" | sed 's|\\|/|g')
+        build_dir="${{ github.workspace }}/build"
+        build_dir=$(echo "$build_dir" | sed 's|\\|/|g')
         echo "build-output-dir=$build_output_dir" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
