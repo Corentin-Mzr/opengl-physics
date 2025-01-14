@@ -23,9 +23,19 @@ set(GLM_BUILD_INSTALL OFF)
 set(GLM_BUILD_TESTS OFF)
 set(GLM_BUILD_LIBRARY OFF)
 
+# ASSIMP Config
+set(ASSIMP_INSTALL OFF)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF)
+set(ASSIMP_BUILD_TESTS OFF)
+set(ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+set(ASSIMP_BUILD_OBJ_IMPORTER ON)
+
 # Add subdirectories
 add_subdirectory(${DEPS_DIR}/glfw)
 add_subdirectory(${DEPS_DIR}/glm)
+add_subdirectory(${DEPS_DIR}/assimp)
 
 # Glob for source files
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
@@ -41,6 +51,7 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE
     ${DEPS_DIR}/glfw/include
     ${DEPS_DIR}/glm/glm
+    ${DEPS_DIR}/assimp/include
     ${DEPS_DIR}
     
     ${CMAKE_SOURCE_DIR}/src/controller
@@ -55,5 +66,6 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
     glfw
     glm
+    assimp
     OpenGL::GL
 )

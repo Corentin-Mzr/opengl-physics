@@ -9,13 +9,17 @@ Load a shader
 {
     // Check if shader is already loaded
     if (is_loaded({vertex_filepath, fragment_filepath}))
+    {
+        std::cout << "[SHADER FACTORY LOADING INFO]\n"
+                  << "Shader is already loaded\n";
         return shader_map.at({vertex_filepath, fragment_filepath});
-    
-    // Else create it and store it if there is no problem
+    }
+
+    // Else create it and store it
+    // Could add a safety to check if shader program is correct
     const unsigned program = make_program(vertex_filepath, fragment_filepath);
-    if (program)
-        shader_map[{vertex_filepath, fragment_filepath}] = program;
-    
+    shader_map[{vertex_filepath, fragment_filepath}] = program;
+
     return program;
 }
 
@@ -105,8 +109,8 @@ Make a shader module
 Check if a shader is already loaded
 @param shader: Pair of vertex_filepath and fragment_filepath
 */
-[[nodiscard]] bool ShaderFactory::is_loaded(const std::pair<const char*, const char*> &shader) const
+[[nodiscard]] bool ShaderFactory::is_loaded(const std::pair<const char *, const char *> &shader) const
 {
-    auto it = shader_map.find(shader);
+    const auto it = shader_map.find(shader);
     return it != shader_map.end();
 }

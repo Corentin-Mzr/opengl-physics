@@ -118,7 +118,9 @@ void App::setup_systems()
 // Define everything in the scene
 void App::setup_scene()
 {
-    shader = shader_factory.load_shader("shaders/vertex.glsl", "shaders/fragment.glsl");
+    shader = shader_factory.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
+    Mesh mesh = mesh_factory.load_mesh(static_cast<int>(ObjectType::Cube));
+    std::cout << mesh.vao << " " << mesh.vbo << " " << mesh.ebo << std::endl;
 }
 
 // Process input each frame
