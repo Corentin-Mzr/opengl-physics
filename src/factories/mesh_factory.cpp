@@ -1,5 +1,14 @@
 #include "mesh_factory.hpp"
 
+MeshFactory::~MeshFactory()
+{
+    for (auto [i, mesh]: meshes)
+    {
+        glDeleteVertexArrays(1, &mesh.vao);
+        glDeleteBuffers(1, &mesh.vbo);
+    }
+}
+
 /*
 Create a mesh or return an existing one
 @param object_type: Type of the mesh
@@ -18,18 +27,24 @@ Create a mesh or return an existing one
     Mesh mesh = load_mesh_from_file(model_names[object_type]);
     if (mesh.vao != 0)
     {
-        std::cout << "[MESH FACTORY LOADING SUCCESS]\n" 
+        std::cout << "[MESH FACTORY LOADING SUCCESS]\n"
                   << "Mesh " << model_names[object_type] << " has been loaded\n";
         meshes[object_type] = mesh;
     }
     else
     {
         std::cerr << "[MESH FACTORY LOADING ERROR]\n"
-                  << "Mesh " << model_names[object_type] 
+                  << "Mesh " << model_names[object_type]
                   << " was not loaded properly, it will not be stored in the mesh map" << std::endl;
     }
 
     return mesh;
+}
+
+// Returns meshes loaded
+[[nodiscard]] std::unordered_map<int, Mesh> MeshFactory::get_meshes() const
+{
+    return meshes;
 }
 
 /*
@@ -249,7 +264,7 @@ Create a mesh using the given data
                                             const std::vector<float> &uvs,
                                             const std::vector<float> &normals)
 {
-    unsigned int vao, vbo_pos;
+    unsigned int vao, vbo_pos, vertex_count;
 
     // Vertex Array Object
     glGenVertexArrays(1, &vao);
@@ -285,5 +300,8 @@ Create a mesh using the given data
     // UNBIND VAO
     glBindVertexArray(0);
 
-    return Mesh{vao, vbo_pos};
+    // Vertex count
+    vertex_count = positions.size();
+
+    return Mesh{vao, vbo_pos, 0, vertex_count};
 }

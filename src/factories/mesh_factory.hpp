@@ -21,11 +21,16 @@ class MeshFactory
 {
 
 public:
+    ~MeshFactory();
+
     /*
     Create a mesh or return an existing one
     @param object_type: Type of the mesh (static_cast<int>(ObjectType))
     */
     [[nodiscard]] Mesh load_mesh(const int object_type);
+
+    // Returns meshes loaded
+    [[nodiscard]] std::unordered_map<int, Mesh> get_meshes() const;
 
 private:
     std::unordered_map<int, Mesh> meshes;

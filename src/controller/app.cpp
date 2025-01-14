@@ -31,13 +31,8 @@ void App::run()
     {
         glfwPollEvents();
         process_input();
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
         physics_system.update(dt);
         render_system.render();
-
-        glfwSwapBuffers(window.get());
     }
 }
 
@@ -97,6 +92,10 @@ void App::setup_opengl()
     // Blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Depth test
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 }
 
 // Define callback functions
@@ -112,15 +111,26 @@ void App::setup_callbacks()
 // Set up some systems
 void App::setup_systems()
 {
-    render_system = RenderSystem(window);
+    // ECS must be initialized before render system
+    ecs_manager = std::make_shared<ECSManager>();
+    render_system = RenderSystem(shader, window, ecs_manager);
 }
 
 // Define everything in the scene
 void App::setup_scene()
 {
     shader = shader_factory.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
-    Mesh mesh = mesh_factory.load_mesh(static_cast<int>(ObjectType::Cube));
-    std::cout << mesh.vao << " " << mesh.vbo << " " << mesh.ebo << std::endl;
+    unsigned entity = ecs_manager->create_entity();
+    
+    TransformComponent transform;
+    transform.position = {0.0f, 0.0f, 0.0f};
+    transform.eulers = {0.0f, 0.0f, 0.0f};
+    transform.scale = {1.0f, 1.0f, 1.0f};
+    ecs_manager->add_component(entity, transform);
+
+    RenderComponent render;
+    render.object_type = ObjectType::CUBE;
+    ecs_manager->add_component(entity, render);
 }
 
 // Process input each frame

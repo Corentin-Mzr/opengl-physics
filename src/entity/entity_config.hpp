@@ -4,8 +4,9 @@
 
 enum class ObjectType
 {
-    Cube,
-    Sphere,
+    CUBE,
+    SPHERE,
+    COUNT, // NOT AN OBJECT TYPE
 };
 
 static const std::array<const char *, 2> model_names
@@ -16,5 +17,5 @@ static const std::array<const char *, 2> model_names
 
 struct Mesh
 {
-    unsigned vao, vbo, ebo;
+    unsigned vao, vbo, ebo, vertex_count;
 };

@@ -27,6 +27,8 @@ class ShaderFactory
     };
 
 public:
+    ~ShaderFactory();
+
     /*
     Load a shader
     @param vertex_filepath: Path to the vertex shader

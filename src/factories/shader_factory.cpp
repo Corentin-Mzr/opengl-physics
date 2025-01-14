@@ -1,5 +1,13 @@
 #include "shader_factory.hpp"
 
+ShaderFactory::~ShaderFactory()
+{
+    for (auto [pair, shader]: shader_map)
+    {
+        glDeleteProgram(shader);
+    }
+}
+
 /*
 Load a shader
 @param vertex_filepath: Path to the vertex shader
