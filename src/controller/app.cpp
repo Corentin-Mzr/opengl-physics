@@ -30,8 +30,13 @@ void App::run()
     while (!glfwWindowShouldClose(window.get()))
     {
         glfwPollEvents();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         process_input();
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        physics_system.update(dt);
+        render_system.render();
+
         glfwSwapBuffers(window.get());
     }
 }
@@ -113,6 +118,7 @@ void App::setup_systems()
 // Define everything in the scene
 void App::setup_scene()
 {
+    shader = shader_factory.load_shader("shaders/vertex.glsl", "shaders/fragment.glsl");
 }
 
 // Process input each frame

@@ -9,6 +9,7 @@
 
 #include "physics_system.hpp"
 #include "render_system.hpp"
+#include "shader_factory.hpp"
 
 /* 
 App class that will create a resizable window
@@ -33,8 +34,10 @@ private:
     unsigned width = 0, height = 0;
     unsigned shader = 0;
     bool keys[1024] = {false};
+    float dt = 0.01f;
     RenderSystem render_system;
     PhysicsSystem physics_system;
+    ShaderFactory shader_factory;
 
     // Initialize GLFW, if fail throw a std::runtime_error exception
     void setup_glfw();
