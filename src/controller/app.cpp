@@ -53,7 +53,7 @@ void App::setup_glfw()
 void App::setup_window()
 {
     // Create a window
-    GLFWwindow *raw_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+    GLFWwindow *raw_window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (raw_window == nullptr)
     {
         glfwTerminate();

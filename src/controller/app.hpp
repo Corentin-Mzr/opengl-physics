@@ -29,7 +29,7 @@ public:
 
 private:
     std::shared_ptr<GLFWwindow> window = nullptr;
-    std::string title = "";
+    const char* title = nullptr;
     unsigned width = 0, height = 0;
     unsigned shader = 0;
     bool keys[1024] = {false};

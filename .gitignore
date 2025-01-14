@@ -32,4 +32,13 @@
 *.app
 
 # VSCode
-.vscode
+.vscode/
+
+# Build directory
+build/
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile

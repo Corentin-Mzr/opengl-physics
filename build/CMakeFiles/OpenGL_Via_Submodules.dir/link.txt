@@ -1,3 +1,0 @@
-C:\Cmake\cmake-3.31.3-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\OpenGL_Via_Submodules.dir/objects.a
-C:\MinGW\mingw64\bin\ar.exe qc CMakeFiles\OpenGL_Via_Submodules.dir/objects.a @CMakeFiles\OpenGL_Via_Submodules.dir\objects1.rsp
-C:\MinGW\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\OpenGL_Via_Submodules.dir/objects.a -Wl,--no-whole-archive -o OpenGL_Via_Submodules.exe -Wl,--out-implib,libOpenGL_Via_Submodules.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\OpenGL_Via_Submodules.dir\linkLibs.rsp
