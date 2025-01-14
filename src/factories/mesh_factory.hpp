@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
