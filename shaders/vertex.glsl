@@ -93,11 +93,10 @@ uniform vec3 position;
 uniform vec3 euler;
 uniform vec3 scale;
 
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 view_projection;
 
 void main()
 {
     mat4 model = model_matrix(position, euler, scale);
-    gl_Position = model * vec4(vertex_pos, 1.0f);
+    gl_Position = view_projection * model * vec4(vertex_pos, 1.0f);
 }

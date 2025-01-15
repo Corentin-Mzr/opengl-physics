@@ -23,16 +23,64 @@ App::~App()
     glfwTerminate();
 }
 
+Mesh create_mesh()
+{
+    unsigned vao, vbo, vcount;
+
+    std::vector<float> positions = {
+        0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f};
+
+    vcount = 3;
+
+    // Vertex Array Object
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    // Generate VBO for Position and link to layout 0
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), positions.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+    // UNBIND VAO
+    glBindVertexArray(0);
+
+    return Mesh{vao, vbo, 0, vcount};
+}
+
 // Run the app
 void App::run()
 {
+    /* DRAW A CUBE */
+    MeshFactory factory;
+    Mesh mesh = factory.load_mesh(static_cast<unsigned>(ObjectType::CUBE));
+    int pos_loc = glGetUniformLocation(shader, "position");
+    int euler_loc = glGetUniformLocation(shader, "euler");
+    int scale_loc = glGetUniformLocation(shader, "scale");
+    glUniform3fv(pos_loc, 1, glm::value_ptr(glm::vec3{0.0f, 0.0f, 0.0f}));
+    glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, 0.0f, 0.0f})));
+    glUniform3fv(scale_loc, 1, glm::value_ptr(glm::vec3{1.0f, 1.0f, 1.0f}));
+
+    int i = 0;
+
     // Main loop
     while (!glfwWindowShouldClose(window.get()))
     {
         glfwPollEvents();
         process_input();
-        physics_system.update(dt);
-        render_system.render();
+        // physics_system.update(dt);
+        // render_system.render();
+
+        glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, i * 0.1f, 0.0f})));
+        i++;
+        camera_system.update();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glBindVertexArray(mesh.vao);
+        glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
+        glfwSwapBuffers(window.get());
     }
 }
 
@@ -89,6 +137,9 @@ void App::setup_opengl()
     // Define background color
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+    // Wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     // Blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -111,17 +162,21 @@ void App::setup_callbacks()
 // Set up some systems
 void App::setup_systems()
 {
+    // Shader must be initialized before everything
+    shader = shader_factory.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
+    glUseProgram(shader);
+
     // ECS must be initialized before render system
     ecs_manager = std::make_shared<ECSManager>();
     render_system = RenderSystem(shader, window, ecs_manager);
+    camera_system = CameraSystem(shader, window);
 }
 
 // Define everything in the scene
 void App::setup_scene()
 {
-    shader = shader_factory.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
     unsigned entity = ecs_manager->create_entity();
-    
+
     TransformComponent transform;
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};

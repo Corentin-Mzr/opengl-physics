@@ -9,6 +9,7 @@
 
 #include "physics_system.hpp"
 #include "render_system.hpp"
+#include "camera_system.hpp"
 
 #include "shader_factory.hpp"
 #include "mesh_factory.hpp"
@@ -41,6 +42,7 @@ private:
     float dt = 0.01f;
     RenderSystem render_system;
     PhysicsSystem physics_system;
+    CameraSystem camera_system;
     ShaderFactory shader_factory;
     std::shared_ptr<ECSManager> ecs_manager = nullptr;
 
