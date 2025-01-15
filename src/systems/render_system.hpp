@@ -26,10 +26,9 @@ public:
     void render();
 
 private:
+    unsigned int shader = 0;
     std::shared_ptr<GLFWwindow> window = nullptr;
     std::shared_ptr<ECSManager> ecs = nullptr;
-
-    unsigned int shader = 0;
 
     int pos_loc = 0;
     int euler_loc = 0;

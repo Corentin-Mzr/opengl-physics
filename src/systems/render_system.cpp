@@ -7,18 +7,24 @@ Class that will render the rendering of a scene
 */
 RenderSystem::RenderSystem(const unsigned shader,
                            const std::shared_ptr<GLFWwindow> &window,
-                           const std::shared_ptr<ECSManager> &ecs) : window(window), ecs(ecs)
+                           const std::shared_ptr<ECSManager> &ecs) : shader(shader), window(window), ecs(ecs)
 {
+    // glUseProgram(shader);
     pos_loc = glGetUniformLocation(shader, "position");
     euler_loc = glGetUniformLocation(shader, "euler");
     scale_loc = glGetUniformLocation(shader, "scale");
 
-    build_meshes();
+    // std::cout << pos_loc << " " << euler_loc << " " << scale_loc << std::endl;
+
+    // TODO: ADD THIS
+    // build_meshes();
 }
 
 // Render the scene
 void RenderSystem::render()
 {
+    // glUseProgram(shader);
+
     auto &transform_components = ecs->get_transforms();
     auto &render_components = ecs->get_renders();
     const auto &meshes = mesh_factory.get_meshes();
@@ -35,7 +41,7 @@ void RenderSystem::render()
         {
             const TransformComponent &transform = transform_components[entity];
             const RenderComponent &render = render_components[entity];
-            const Mesh mesh = meshes.at(static_cast<int>(render.object_type));
+            const Mesh mesh = meshes.at(static_cast<unsigned>(render.object_type));
 
             // Data to send to create the model matrix
             glUniform3fv(pos_loc, 1, glm::value_ptr(transform.position));
@@ -46,7 +52,7 @@ void RenderSystem::render()
             // glBindTexture(GL_TEXTURE_2D, render.material);
 
             glBindVertexArray(mesh.vao);
-            glDrawArrays(GL_TRIANGLES, 0, 36); //mesh.vertex_count);
+            glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
             // glDrawElements(GL_TRIANGLES, render.vertex_count, GL_UNSIGNED_INT, 0);
         }
     }
@@ -58,8 +64,7 @@ void RenderSystem::render()
 // Build every mesh from the MeshFactory
 void RenderSystem::build_meshes()
 {
-    size_t n = static_cast<size_t>(ObjectType::COUNT);
-    for (size_t i = 0; i < n; ++i)
+    for (size_t i = 0; i < OBJECT_TYPE_COUNT; ++i)
     {
         Mesh mesh = mesh_factory.load_mesh(i);
     }
