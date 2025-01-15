@@ -32,9 +32,9 @@ public:
 
     /*
     Orientate the camera
-    @param deuler: Angular displacement (from mouse motion)
+    @param deulers: Angular displacement (from mouse motion)
     */
-    void spin(const glm::vec3 &deuler);
+    void spin(const glm::vec3 &deulers);
 
 private:
     unsigned shader = 0;

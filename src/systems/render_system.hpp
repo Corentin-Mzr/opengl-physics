@@ -22,12 +22,16 @@ public:
     RenderSystem() = default;
     RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window_ptr, const std::shared_ptr<ECSManager> &ecs);
     RenderSystem(const RenderSystem &) = delete;
+    ~RenderSystem();
 
     // Render the scene
     void render();
 
     // Debug purpose only
     void simple_render();
+
+    // For cleanup
+    const std::unordered_map<unsigned, Mesh>& get_meshes() const;
 
 private:
     unsigned int shader = 0;

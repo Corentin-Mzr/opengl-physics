@@ -9,7 +9,7 @@ CameraSystem::CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwind
     glfwGetWindowSize(window.get(), &width, &height);
 
     // Initial position - orientation - direction - world up
-    position = glm::vec3{-2.0f, 0.0f, 0.0f};
+    position = glm::vec3{0.0f, 0.0f, 0.0f};
     eulers = glm::vec3{0.0f, 0.0f, 0.0f};
     forwards = glm::vec3{1.0f, 0.0f, 0.0f};
     world_up = glm::vec3{0.0f, 1.0f, 0.0f};
@@ -68,8 +68,16 @@ void CameraSystem::move(const glm::vec3 &dpos)
 
 /*
 Orientate the camera
-@param deuler: Angular displacement (from mouse motion)
+@param deulers: Angular displacement (from mouse motion)
 */
-void CameraSystem::spin(const glm::vec3 &deuler)
+void CameraSystem::spin(const glm::vec3 &deulers)
 {
+    eulers.y += deulers.y;
+
+    if (eulers.y > 360.0f)
+        eulers.y -= 360.0f;
+    if (eulers.y < 0.0f)
+        eulers.y += 360.0f;
+    
+    eulers.z = std::min(89.0f, std::max(-89.0f, eulers.z + deulers.z));
 }

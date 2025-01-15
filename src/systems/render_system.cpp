@@ -28,6 +28,21 @@ RenderSystem::RenderSystem(const unsigned shader,
     build_meshes();
 }
 
+RenderSystem::~RenderSystem()
+{
+    // for (auto [i, mesh]: meshes)
+    // {
+    //     glDeleteVertexArrays(1, &mesh.vao);
+    //     glDeleteBuffers(1, &mesh.vbo);
+    // }
+}
+
+// For cleanup
+const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const
+{
+    return meshes;
+}
+
 // Render the scene
 void RenderSystem::render()
 {

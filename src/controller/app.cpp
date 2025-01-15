@@ -19,7 +19,24 @@ App::App(const unsigned width, const unsigned height, const char *title) : width
 
 App::~App()
 {
+    // Delete shader
     glDeleteProgram(shader);
+    std::cout << "[APP DESTRUCTION INFO] Deleted shader\n";
+
+    // Delete meshes
+    for (const auto &[i, mesh]: render_system.get_meshes())
+    {
+        glDeleteVertexArrays(1, &mesh.vao);
+        glDeleteBuffers(1, &mesh.vbo);
+    }
+    std::cout << "[APP DESTRUCTION INFO] Deleted meshes\n";
+
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR)
+    {
+        std::cout << "[APP DESTRUCTION ERROR] An error occured during App destructor call: " << error << std::endl;
+    }
+
     glfwTerminate();
 }
 
@@ -40,7 +57,7 @@ void App::run()
         glfwPollEvents();
         process_input(dt);
         camera_system.update();
-        render_system.simple_render();
+        render_system.render();
     }
 }
 
@@ -131,7 +148,10 @@ void App::setup_systems()
     glUseProgram(shader);
 
     // ECS must be initialized before render system
-    ecs_manager = std::make_shared<ECSManager>();
+    if (ecs_manager == nullptr)
+        ecs_manager = std::make_shared<ECSManager>();
+    
+    // TODO: INITIALIZE RENDER SYSTEM
     render_system = RenderSystem(shader, window, ecs_manager);
     camera_system = CameraSystem(shader, window);
 }
