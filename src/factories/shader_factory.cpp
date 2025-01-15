@@ -18,7 +18,7 @@ Load a shader
     // Check if shader is already loaded
     if (is_loaded({vertex_filepath, fragment_filepath}))
     {
-        std::cout << "[SHADER FACTORY LOADING INFO]\n"
+        std::cout << "[SHADER FACTORY LOADING INFO] "
                   << "Shader is already loaded\n";
         return shader_map.at({vertex_filepath, fragment_filepath});
     }
@@ -55,7 +55,7 @@ Make a shader program and stores it in the shader map
     {
         char error_log[1024];
         glGetShaderInfoLog(shader_program, 1024, NULL, error_log);
-        std::cerr << "[SHADER PROGRAM LINKING ERROR]\n"
+        std::cerr << "[SHADER PROGRAM LINKING ERROR] "
                   << error_log << std::endl;
     }
 
@@ -86,7 +86,7 @@ Make a shader module
     }
     catch (std::ifstream::failure &e)
     {
-        std::cerr << "[SHADER MODULE CREATION ERROR]\n"
+        std::cerr << "[SHADER MODULE CREATION ERROR] "
                   << e.what() << std::endl;
     }
 
@@ -106,7 +106,7 @@ Make a shader module
     {
         char error_log[1024];
         glGetShaderInfoLog(shader_module, 1024, NULL, error_log);
-        std::cerr << "[SHADER MODULE COMPILATION ERROR]\n"
+        std::cerr << "[SHADER MODULE COMPILATION ERROR] "
                   << error_log << std::endl;
     }
 
