@@ -39,6 +39,8 @@ private:
     unsigned width = 0, height = 0;
     unsigned shader = 0;
     bool keys[1024] = {false};
+    double xpos = 0.0, ypos = 0.0, xoffset = 0.0, yoffset = 0.0;
+    bool first_motion = true;
     float dt = 0.01f;
     RenderSystem render_system;
     PhysicsSystem physics_system;
@@ -68,11 +70,14 @@ private:
     void setup_scene();
 
     // Process input each frame
-    void process_input();
+    void process_input(const double dt);
 
     // Handle window resizing
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
     // Handle key inputs
     static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+    // Handle mouse motion
+    static void mouse_callback(GLFWwindow *window, double xposin, double yposin);
 };

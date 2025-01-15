@@ -26,13 +26,21 @@ App::~App()
 // Run the app
 void App::run()
 {
+    // Measure time
+    double previous_time = glfwGetTime();
+    double dt = 0.0f;
+
     // Main loop
     while (!glfwWindowShouldClose(window.get()))
     {
+        double current_time = glfwGetTime();
+        double dt = current_time - previous_time;
+        previous_time = current_time;
+
         glfwPollEvents();
-        process_input();
+        process_input(dt);
         camera_system.update();
-        render_system.render();
+        render_system.simple_render();
     }
 }
 
@@ -67,6 +75,7 @@ void App::setup_window()
     glfwMakeContextCurrent(window.get());
     glfwSwapInterval(1);
     glfwSetWindowUserPointer(window.get(), this);
+    glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 // Load GLAD
@@ -109,6 +118,9 @@ void App::setup_callbacks()
 
     // Define input callback
     glfwSetKeyCallback(window.get(), key_callback);
+
+    // Define mouse callback
+    glfwSetCursorPosCallback(window.get(), mouse_callback);
 }
 
 // Set up some systems
@@ -153,8 +165,57 @@ void App::setup_scene()
 }
 
 // Process input each frame
-void App::process_input()
+void App::process_input(const double dt)
 {
+    glm::vec3 dpos{0.0f, 0.0f, 0.0f};
+    glm::vec3 deulers{0.0f, 0.0f, 0.0f};
+    float speed_factor = 1.0f;
+    float mouse_sensivity = 20.0f;
+
+    /* ------ KEYBOARD CONTROLS ------ */
+
+    // Front
+    if (keys[GLFW_KEY_O])
+        dpos.x += 1.0f;
+
+    // Back
+    if (keys[GLFW_KEY_L])
+        dpos.x -= 1.0f;
+
+    // Right
+    if (keys[GLFW_KEY_SEMICOLON])
+        dpos.z += 1.0f;
+
+    // Left
+    if (keys[GLFW_KEY_K])
+        dpos.z -= 1.0f;
+
+    // Up
+    if (keys[GLFW_KEY_SPACE])
+        dpos.y += 1.0f;
+
+    // Down
+    if (keys[GLFW_KEY_M])
+        dpos.y -= 1.0f;
+
+    // Sprint
+    if (keys[GLFW_KEY_J])
+        speed_factor = 3.0f;
+
+    if (glm::length(dpos) > 1.0f)
+        dpos = glm::normalize(dpos);
+    dpos *= speed_factor;
+    dpos *= dt;
+
+    camera_system.move(dpos);
+
+    /* ------ MOUSE CONTROLS ------ */
+
+    deulers.y = xoffset * mouse_sensivity * dt;
+    deulers.z = yoffset * mouse_sensivity * dt;
+
+    camera_system.spin(deulers);
+    xoffset = 0.0, yoffset = 0.0;
 }
 
 // Handle window resizing
@@ -177,4 +238,23 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
         else if (action == GLFW_RELEASE)
             app->keys[key] = false;
     }
+}
+
+// Handle mouse motion
+void App::mouse_callback(GLFWwindow *window, double xposin, double yposin)
+{
+    auto app = static_cast<App *>(glfwGetWindowUserPointer(window));
+
+    if (app->first_motion)
+    {
+        app->xpos = xposin;
+        app->ypos = yposin;
+        app->first_motion = false;
+    }
+
+    app->xoffset = xposin - app->xpos;
+    app->yoffset = app->ypos - yposin;
+
+    app->xpos = xposin;
+    app->ypos = yposin;
 }
