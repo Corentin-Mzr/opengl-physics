@@ -1,13 +1,5 @@
 #include "shader_factory.hpp"
 
-ShaderFactory::~ShaderFactory()
-{
-    for (auto [pair, shader]: shader_map)
-    {
-        glDeleteProgram(shader);
-    }
-}
-
 /*
 Load a shader
 @param vertex_filepath: Path to the vertex shader
@@ -15,18 +7,13 @@ Load a shader
 */
 [[nodiscard]] unsigned ShaderFactory::load_shader(const char *vertex_filepath, const char *fragment_filepath)
 {
-    // Check if shader is already loaded
-    if (is_loaded({vertex_filepath, fragment_filepath}))
-    {
-        std::cout << "[SHADER FACTORY LOADING INFO] "
-                  << "Shader is already loaded\n";
-        return shader_map.at({vertex_filepath, fragment_filepath});
-    }
-
-    // Else create it and store it
-    // Could add a safety to check if shader program is correct
+    std::cout << "[SHADER FACTORY LOADING INFO] Creating a shader with " << vertex_filepath << " and " << fragment_filepath << std::endl;
     const unsigned program = make_program(vertex_filepath, fragment_filepath);
-    shader_map[{vertex_filepath, fragment_filepath}] = program;
+    
+    if (program)
+        std::cout << "[SHADER FACTORY LOADING SUCCESS] Shader was created\n";
+    else
+        std::cerr << "[SHADER FACTORY LOADING ERROR] Could not create the shader\n";
 
     return program;
 }
@@ -55,8 +42,7 @@ Make a shader program and stores it in the shader map
     {
         char error_log[1024];
         glGetShaderInfoLog(shader_program, 1024, NULL, error_log);
-        std::cerr << "[SHADER PROGRAM LINKING ERROR] "
-                  << error_log << std::endl;
+        std::cerr << "[SHADER PROGRAM LINKING ERROR] " << error_log << std::endl;
     }
 
     // Delete modules
@@ -86,8 +72,7 @@ Make a shader module
     }
     catch (std::ifstream::failure &e)
     {
-        std::cerr << "[SHADER MODULE CREATION ERROR] "
-                  << e.what() << std::endl;
+        std::cerr << "[SHADER MODULE CREATION ERROR] " << e.what() << std::endl;
     }
 
     // Convert to char*
@@ -106,19 +91,8 @@ Make a shader module
     {
         char error_log[1024];
         glGetShaderInfoLog(shader_module, 1024, NULL, error_log);
-        std::cerr << "[SHADER MODULE COMPILATION ERROR] "
-                  << error_log << std::endl;
+        std::cerr << "[SHADER MODULE COMPILATION ERROR] " << error_log << std::endl;
     }
 
     return shader_module;
-}
-
-/*
-Check if a shader is already loaded
-@param shader: Pair of vertex_filepath and fragment_filepath
-*/
-[[nodiscard]] bool ShaderFactory::is_loaded(const std::pair<const char *, const char *> &shader) const
-{
-    const auto it = shader_map.find(shader);
-    return it != shader_map.end();
 }

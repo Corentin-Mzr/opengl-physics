@@ -16,32 +16,24 @@
 
 /*
 Class that handles the creation of a model/mesh
-Also stores all the meshes created
 */
 class MeshFactory
 {
 
 public:
-    ~MeshFactory();
-
     /*
     Create a mesh or return an existing one
     @param object_type: Type of the mesh (static_cast<unsigned>(ObjectType))
     */
     [[nodiscard]] Mesh load_mesh(const unsigned object_type);
 
-    // Returns meshes loaded
-    [[nodiscard]] std::unordered_map<unsigned, Mesh> get_meshes() const;
-
 private:
-    std::unordered_map<unsigned, Mesh> meshes;
-
     /*
     Load a mesh using a file and store it in the mesh map
     @param filepath: Path to the mesh file (.obj)
     @param object_type: Type of object
     */
-    void load_mesh_from_file(const char *filepath, const unsigned object_type);
+    [[nodiscard]] Mesh load_mesh_from_file(const char *filepath, const unsigned object_type);
 
     /*
     Process every node
@@ -106,12 +98,6 @@ private:
     @param uvs: Array to fill
     */
     void fill_normal_array(const aiMesh *mesh, const size_t i, std::vector<float> &normals);
-
-    /*
-    Check if a model is already loaded
-    @param object_type: Type of the mesh (static_cast<int>(ObjectType))
-    */
-    [[nodiscard]] bool is_loaded(const int object_type) const;
 
     /*
     Create a mesh using the given data and store it in the mesh map

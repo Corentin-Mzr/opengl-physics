@@ -1,33 +1,15 @@
 #include "mesh_factory.hpp"
 
-MeshFactory::~MeshFactory()
-{
-    for (auto [i, mesh] : meshes)
-    {
-        glDeleteVertexArrays(1, &mesh.vao);
-        glDeleteBuffers(1, &mesh.vbo);
-    }
-}
-
 /*
-Create a mesh or return an existing one
+Create a mesh
 @param object_type: Type of the mesh
 */
-[[nodiscard]] Mesh MeshFactory::load_mesh(const unsigned object_type)
+Mesh MeshFactory::load_mesh(const unsigned object_type)
 {
-    // Check if mesh is already loaded
-    if (is_loaded(object_type))
-    {
-        std::cout << "[MESH FACTORY LOADING INFO] "
-                  << "Mesh " << model_names[object_type] << " is already loaded\n";
-        return meshes.at(object_type);
-    }
-
-    // Else create it and store it in the mesh map
-    load_mesh_from_file(model_names[object_type], object_type);
+    Mesh mesh = load_mesh_from_file(model_names[object_type], object_type);
 
     // Check
-    if (meshes[object_type].vertex_count != 0 && meshes[object_type].vao != 0)
+    if (mesh.vertex_count != 0 && mesh.vao != 0)
     {
         std::cout << "[MESH FACTORY LOADING SUCCESS] "
                   << "Mesh " << model_names[object_type] << " has been loaded\n";
@@ -35,38 +17,28 @@ Create a mesh or return an existing one
     else
     {
         std::cerr << "[MESH FACTORY LOADING ERROR] "
-                  << "Mesh " << model_names[object_type]
-                  << " was not loaded properly, it will not be stored in the mesh map" << std::endl;
+                  << "Mesh " << model_names[object_type] << " was not loaded properly\n";
     }
 
-    return meshes.at(object_type);
-}
-
-// Returns meshes loaded
-[[nodiscard]] std::unordered_map<unsigned, Mesh> MeshFactory::get_meshes() const
-{
-    return meshes;
+    return mesh;
 }
 
 /*
 Load a mesh using a file
 @param filepath: Path to the mesh file (.obj)
 */
-void MeshFactory::load_mesh_from_file(const char *filepath, const unsigned object_type)
+Mesh MeshFactory::load_mesh_from_file(const char *filepath, const unsigned object_type)
 {
-    std::cout << "[MESH FACTORY LOADING INFO] "
-              << "Trying to load " << filepath << std::endl;
+    std::cout << "[MESH FACTORY LOADING INFO] Trying to load " << filepath << std::endl;
 
     // Load the model with Assimp
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(filepath,
-                                           aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     // Check for loading erros
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
-        std::cerr << "[MESH FACTORY LOADING ERROR] "
-                  << import.GetErrorString() << std::endl;
+        std::cerr << "[MESH FACTORY LOADING ERROR] " << import.GetErrorString() << std::endl;
     }
 
     // Store directory (will be used for texture loading)
@@ -78,6 +50,8 @@ void MeshFactory::load_mesh_from_file(const char *filepath, const unsigned objec
 
     // Store loaded mesh (directly in the map so that we dont use intermediate variables that would destroy the object)
     process_node(scene->mRootNode, scene, object_type, positions, uvs, normals);
+
+    return create_mesh(positions, uvs, normals);
 }
 
 /*
@@ -107,10 +81,6 @@ void MeshFactory::process_node(const aiNode *node, const aiScene *scene,
     {
         process_node(node->mChildren[i], scene, object_type, positions, uvs, normals);
     }
-
-    // Store in the map
-    // models_loaded[filepath] = std::make_shared<BaseMesh>(positions, uvs, normals);
-    meshes[object_type] = create_mesh(positions, uvs, normals);
 }
 
 /*
@@ -244,16 +214,6 @@ void MeshFactory::fill_normal_array(const aiMesh *mesh, const size_t i, std::vec
 }
 
 /*
-Check if a model is already loaded
-@param object_type: Type of the mesh
-*/
-[[nodiscard]] bool MeshFactory::is_loaded(const int object_type) const
-{
-    const auto it = meshes.find(object_type);
-    return it != meshes.end();
-}
-
-/*
 Create a mesh using the given data
 @param positions: Array containing positions of vertices
 @param uvs: Array containing the uv coords of vertices
@@ -300,8 +260,8 @@ Create a mesh using the given data
     glBindVertexArray(0);
 
     // Vertex count
-    vertex_count = positions.size();
+    vertex_count = positions.size() / 3;
 
     // Store mesh
-    return Mesh{vao, vbo_pos, 0, vertex_count}; //std::make_shared<Mesh>(vao, vbo_pos, 0, vertex_count);
+    return Mesh{vao, vbo_pos, 0, vertex_count};
 }

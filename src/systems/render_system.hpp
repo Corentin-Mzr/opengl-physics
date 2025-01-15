@@ -12,6 +12,7 @@
 
 /*
 Class that will handle the rendering of a scene
+@param shader: Shader to use
 @param window: Window on which render the scene, as a std::shared_ptr<GLFWwindow>
 @param ecs: ECS Manager
 */
@@ -24,6 +25,9 @@ public:
 
     // Render the scene
     void render();
+
+    // Debug purpose only
+    void simple_render();
 
 private:
     unsigned int shader = 0;
@@ -38,4 +42,6 @@ private:
 
     // Build every mesh from the MeshFactory
     void build_meshes();
+
+    std::unordered_map<unsigned, Mesh> meshes;
 };

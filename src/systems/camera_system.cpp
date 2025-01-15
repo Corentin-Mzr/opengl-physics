@@ -25,10 +25,12 @@ CameraSystem::CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwind
     constexpr float far = 100.0f;
     projection = glm::perspective(fovy, aspect_ratio, near, far);
 
-    // Get uniform location in shader
+    // Get uniform location in shader, make sure we use the shader
+    glUseProgram(shader);
     view_proj_loc = glGetUniformLocation(shader, "view_projection");
 
-    // std::cout << view_proj_loc << std::endl;
+    if (view_proj_loc == -1)
+        std::cerr << "[CAMERA SYSTEM ERROR] Uniform \"view_projection\" not found\n";
 }
 
 // Update the camera

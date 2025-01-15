@@ -23,64 +23,16 @@ App::~App()
     glfwTerminate();
 }
 
-Mesh create_mesh()
-{
-    unsigned vao, vbo, vcount;
-
-    std::vector<float> positions = {
-        0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f};
-
-    vcount = 3;
-
-    // Vertex Array Object
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    // Generate VBO for Position and link to layout 0
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * positions.size(), positions.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-
-    // UNBIND VAO
-    glBindVertexArray(0);
-
-    return Mesh{vao, vbo, 0, vcount};
-}
-
 // Run the app
 void App::run()
 {
-    /* DRAW A CUBE */
-    MeshFactory factory;
-    Mesh mesh = factory.load_mesh(static_cast<unsigned>(ObjectType::CUBE));
-    int pos_loc = glGetUniformLocation(shader, "position");
-    int euler_loc = glGetUniformLocation(shader, "euler");
-    int scale_loc = glGetUniformLocation(shader, "scale");
-    glUniform3fv(pos_loc, 1, glm::value_ptr(glm::vec3{0.0f, 0.0f, 0.0f}));
-    glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, 0.0f, 0.0f})));
-    glUniform3fv(scale_loc, 1, glm::value_ptr(glm::vec3{1.0f, 1.0f, 1.0f}));
-
-    int i = 0;
-
     // Main loop
     while (!glfwWindowShouldClose(window.get()))
     {
         glfwPollEvents();
         process_input();
-        // physics_system.update(dt);
-        // render_system.render();
-
-        glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, i * 0.1f, 0.0f})));
-        i++;
         camera_system.update();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glBindVertexArray(mesh.vao);
-        glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
-        glfwSwapBuffers(window.get());
+        render_system.render();
     }
 }
 
@@ -175,16 +127,28 @@ void App::setup_systems()
 // Define everything in the scene
 void App::setup_scene()
 {
+    /* ENTITY 1 : CUBE */
     unsigned entity = ecs_manager->create_entity();
-
     TransformComponent transform;
+    RenderComponent render;
+
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
     transform.scale = {1.0f, 1.0f, 1.0f};
     ecs_manager->add_component(entity, transform);
 
-    RenderComponent render;
     render.object_type = ObjectType::CUBE;
+    ecs_manager->add_component(entity, render);
+
+    /* ENTITY 2 : SPHERE */
+    entity = ecs_manager->create_entity();
+
+    transform.position = {1.0f, 0.0f, 1.0f};
+    transform.eulers = {0.0f, 0.0f, 0.0f};
+    transform.scale = {1.0f, 1.0f, 1.0f};
+    ecs_manager->add_component(entity, transform);
+
+    render.object_type = ObjectType::SPHERE;
     ecs_manager->add_component(entity, render);
 }
 
