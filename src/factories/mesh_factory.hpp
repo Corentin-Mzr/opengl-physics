@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -25,36 +26,37 @@ public:
 
     /*
     Create a mesh or return an existing one
-    @param object_type: Type of the mesh (static_cast<int>(ObjectType))
+    @param object_type: Type of the mesh (static_cast<unsigned>(ObjectType))
     */
-    [[nodiscard]] Mesh load_mesh(const int object_type);
+    [[nodiscard]] Mesh load_mesh(const unsigned object_type);
 
     // Returns meshes loaded
-    [[nodiscard]] std::unordered_map<int, Mesh> get_meshes() const;
+    [[nodiscard]] std::unordered_map<unsigned, Mesh> get_meshes() const;
 
 private:
-    std::unordered_map<int, Mesh> meshes;
+    std::unordered_map<unsigned, Mesh> meshes;
 
     /*
-    Load a mesh using a file
+    Load a mesh using a file and store it in the mesh map
     @param filepath: Path to the mesh file (.obj)
+    @param object_type: Type of object
     */
-    [[nodiscard]] Mesh load_mesh_from_file(const char *filepath);
+    void load_mesh_from_file(const char *filepath, const unsigned object_type);
 
     /*
     Process every node
     @param node: Node object
     @param scene: Scene related to the mesh
-    @param filepath: Path to the mesh file (.obj)
+    @param object_type: Type of the object
     @param positions: Stores positions of all vertices
     @param uvs: Stores UV coords of all vertices
     @param normals: Stores normals of all vertices
     */
     void process_node(const aiNode *node, const aiScene *scene,
-                                   const char *filepath,
-                                   std::vector<float> &positions,
-                                   std::vector<float> &uvs,
-                                   std::vector<float> &normals);
+                      const unsigned object_type,
+                      std::vector<float> &positions,
+                      std::vector<float> &uvs,
+                      std::vector<float> &normals);
 
     /*
     Process the mesh
@@ -65,9 +67,9 @@ private:
     @param normals: Stores normals of all vertices
     */
     void process_mesh(const aiMesh *mesh, const aiScene *scene,
-                                   std::vector<float> &positions,
-                                   std::vector<float> &uvs,
-                                   std::vector<float> &normals);
+                      std::vector<float> &positions,
+                      std::vector<float> &uvs,
+                      std::vector<float> &normals);
 
     /*
     Reserve space to arrays based on the mesh data
@@ -77,9 +79,9 @@ private:
     @param normals: Stores normals of all vertices
     */
     void reserve_space(const aiMesh *mesh,
-                                    std::vector<float> &positions,
-                                    std::vector<float> &uvs,
-                                    std::vector<float> &normals);
+                       std::vector<float> &positions,
+                       std::vector<float> &uvs,
+                       std::vector<float> &normals);
 
     /*
     Fill the position array and normalize
@@ -112,7 +114,7 @@ private:
     [[nodiscard]] bool is_loaded(const int object_type) const;
 
     /*
-    Create a mesh using the given data
+    Create a mesh using the given data and store it in the mesh map
     @param positions: Array containing positions of vertices
     @param uvs: Array containing the uv coords of vertices
     @param normals: Array containing the normals of vertices

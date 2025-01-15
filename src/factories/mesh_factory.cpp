@@ -2,7 +2,7 @@
 
 MeshFactory::~MeshFactory()
 {
-    for (auto [i, mesh]: meshes)
+    for (auto [i, mesh] : meshes)
     {
         glDeleteVertexArrays(1, &mesh.vao);
         glDeleteBuffers(1, &mesh.vbo);
@@ -13,36 +13,37 @@ MeshFactory::~MeshFactory()
 Create a mesh or return an existing one
 @param object_type: Type of the mesh
 */
-[[nodiscard]] Mesh MeshFactory::load_mesh(const int object_type)
+[[nodiscard]] Mesh MeshFactory::load_mesh(const unsigned object_type)
 {
     // Check if mesh is already loaded
     if (is_loaded(object_type))
     {
-        std::cout << "[MESH FACTORY LOADING INFO]\n"
+        std::cout << "[MESH FACTORY LOADING INFO] "
                   << "Mesh " << model_names[object_type] << " is already loaded\n";
         return meshes.at(object_type);
     }
 
-    // Else create it and store it in the mesh map;
-    Mesh mesh = load_mesh_from_file(model_names[object_type]);
-    if (mesh.vao != 0)
+    // Else create it and store it in the mesh map
+    load_mesh_from_file(model_names[object_type], object_type);
+
+    // Check
+    if (meshes[object_type].vertex_count != 0 && meshes[object_type].vao != 0)
     {
-        std::cout << "[MESH FACTORY LOADING SUCCESS]\n"
+        std::cout << "[MESH FACTORY LOADING SUCCESS] "
                   << "Mesh " << model_names[object_type] << " has been loaded\n";
-        meshes[object_type] = mesh;
     }
     else
     {
-        std::cerr << "[MESH FACTORY LOADING ERROR]\n"
+        std::cerr << "[MESH FACTORY LOADING ERROR] "
                   << "Mesh " << model_names[object_type]
                   << " was not loaded properly, it will not be stored in the mesh map" << std::endl;
     }
 
-    return mesh;
+    return meshes.at(object_type);
 }
 
 // Returns meshes loaded
-[[nodiscard]] std::unordered_map<int, Mesh> MeshFactory::get_meshes() const
+[[nodiscard]] std::unordered_map<unsigned, Mesh> MeshFactory::get_meshes() const
 {
     return meshes;
 }
@@ -51,9 +52,9 @@ Create a mesh or return an existing one
 Load a mesh using a file
 @param filepath: Path to the mesh file (.obj)
 */
-[[nodiscard]] Mesh MeshFactory::load_mesh_from_file(const char *filepath)
+void MeshFactory::load_mesh_from_file(const char *filepath, const unsigned object_type)
 {
-    std::cout << "[MESH FACTORY LOADING INFO]\n"
+    std::cout << "[MESH FACTORY LOADING INFO] "
               << "Trying to load " << filepath << std::endl;
 
     // Load the model with Assimp
@@ -64,9 +65,8 @@ Load a mesh using a file
     // Check for loading erros
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
-        std::cerr << "[MESH FACTORY LOADING ERROR]\n"
+        std::cerr << "[MESH FACTORY LOADING ERROR] "
                   << import.GetErrorString() << std::endl;
-        return Mesh{};
     }
 
     // Store directory (will be used for texture loading)
@@ -77,13 +77,11 @@ Load a mesh using a file
     std::vector<float> positions, uvs, normals;
 
     // Store loaded mesh (directly in the map so that we dont use intermediate variables that would destroy the object)
-    process_node(scene->mRootNode, scene, filepath, positions, uvs, normals);
-
-    return create_mesh(positions, uvs, normals);
+    process_node(scene->mRootNode, scene, object_type, positions, uvs, normals);
 }
 
 /*
-Process every node
+Process every node and store the mesh created
 @param node: Node object
 @param scene: Scene related to the mesh
 @param filepath: Path to the mesh file (.obj)
@@ -92,7 +90,7 @@ Process every node
 @param normals: Stores normals of all vertices
 */
 void MeshFactory::process_node(const aiNode *node, const aiScene *scene,
-                               const char *filepath,
+                               const unsigned object_type,
                                std::vector<float> &positions,
                                std::vector<float> &uvs,
                                std::vector<float> &normals)
@@ -107,11 +105,12 @@ void MeshFactory::process_node(const aiNode *node, const aiScene *scene,
     // Proces all children' meshes
     for (unsigned int i = 0; i < node->mNumChildren; ++i)
     {
-        process_node(node->mChildren[i], scene, filepath, positions, uvs, normals);
+        process_node(node->mChildren[i], scene, object_type, positions, uvs, normals);
     }
 
     // Store in the map
     // models_loaded[filepath] = std::make_shared<BaseMesh>(positions, uvs, normals);
+    meshes[object_type] = create_mesh(positions, uvs, normals);
 }
 
 /*
@@ -303,5 +302,6 @@ Create a mesh using the given data
     // Vertex count
     vertex_count = positions.size();
 
-    return Mesh{vao, vbo_pos, 0, vertex_count};
+    // Store mesh
+    return Mesh{vao, vbo_pos, 0, vertex_count}; //std::make_shared<Mesh>(vao, vbo_pos, 0, vertex_count);
 }
