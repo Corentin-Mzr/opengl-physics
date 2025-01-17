@@ -47,11 +47,12 @@ void App::run()
     double dt = 0.0f;
     double previous_time = glfwGetTime();
     double current_time = 0.0f;
-    double input_dt = 0.0f;
     double accumulator_dt = 0.0f;
     double physics_dt = 1.0f / 240.0f;
 
     // Data for FPS
+    std::string title_with_fps = std::string(title) + " | FPS: 0";
+    size_t replace_index = title_with_fps.size() - 1;
     double fps_previous = previous_time;
     double fps_current = 0.0f;
     double fps_elapsed = 0.0f;
@@ -68,7 +69,7 @@ void App::run()
             frame_count++;
         else
         {
-            const std::string title_with_fps = std::string(title) + " FPS: " + std::to_string(frame_count / fps_elapsed);
+            title_with_fps.replace(replace_index, title_with_fps.size(), std::to_string(frame_count / fps_elapsed));
             glfwSetWindowTitle(window.get(), title_with_fps.c_str());
             fps_elapsed = 0.0f;
             fps_previous = current_time;
