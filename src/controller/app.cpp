@@ -44,19 +44,53 @@ App::~App()
 void App::run()
 {
     // Measure time
-    double previous_time = glfwGetTime();
     double dt = 0.0f;
+    double previous_time = glfwGetTime();
+    double current_time = 0.0f;
+    double input_dt = 0.0f;
+    double accumulator_dt = 0.0f;
+    double physics_dt = 1.0f / 240.0f;
+
+    // Data for FPS
+    double fps_previous = previous_time;
+    double fps_current = 0.0f;
+    double fps_elapsed = 0.0f;
+    float frame_count = 0;
 
     // Main loop
     while (!glfwWindowShouldClose(window.get()))
     {
-        double current_time = glfwGetTime();
-        double dt = current_time - previous_time;
+        current_time = glfwGetTime();
+        fps_elapsed = current_time - fps_previous;
+
+        // FPS
+        if (fps_elapsed < 1.0f)
+            frame_count++;
+        else
+        {
+            const std::string title_with_fps = std::string(title) + " FPS: " + std::to_string(frame_count / fps_elapsed);
+            glfwSetWindowTitle(window.get(), title_with_fps.c_str());
+            fps_elapsed = 0.0f;
+            fps_previous = current_time;
+            frame_count = 0;
+        }
+
+        // 
+        dt = current_time - previous_time;
         previous_time = current_time;
 
+        // Accumulate passed time
+        accumulator_dt += dt;
+
         glfwPollEvents();
-        process_input(dt);
-        physics_system.update(physics_dt);
+
+        while (accumulator_dt >= physics_dt)
+        {
+            physics_system.update(physics_dt);
+            accumulator_dt -= physics_dt;
+            process_input(physics_dt);
+        }
+        
         camera_system.update();
         render_system.render();
     }
