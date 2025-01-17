@@ -1,7 +1,7 @@
-#include "ecs_manager.hpp"
+#include "entity_manager.hpp"
 
 // Create an entity and return its id
-[[nodiscard]] unsigned int ECSManager::create_entity()
+[[nodiscard]] unsigned int EntityManager::create_entity()
 {
     unsigned int entity_id = entity_count;
     entity_masks[entity_id] = 0;
@@ -14,7 +14,7 @@ Add a PhysicsComponent to an entity
 @param entity: Entity's id
 @param component: Physics component
 */
-void ECSManager::add_component(const unsigned entity, const PhysicsComponent &component)
+void EntityManager::add_component(const unsigned entity, const PhysicsComponent &component)
 {
     physics_components[entity] = component;
     entity_masks[entity] |= static_cast<unsigned>(ComponentType::PHYSICS);
@@ -25,7 +25,7 @@ Add a TransformComponent to an entity
 @param entity: Entity's id
 @param component: Transform component
 */
-void ECSManager::add_component(const unsigned entity, const TransformComponent &component)
+void EntityManager::add_component(const unsigned entity, const TransformComponent &component)
 {
     transform_components[entity] = component;
     entity_masks[entity] |= static_cast<unsigned>(ComponentType::TRANSFORM);
@@ -36,7 +36,7 @@ Add a RenderComponent to an entity
 @param entity: Entity's id
 @param component: Render component
 */
-void ECSManager::add_component(const unsigned entity, const RenderComponent &component)
+void EntityManager::add_component(const unsigned entity, const RenderComponent &component)
 {
     render_components[entity] = component;
     entity_masks[entity] |= static_cast<unsigned>(ComponentType::RENDER);
@@ -47,7 +47,7 @@ Remove a component from an entity
 @param entity: Entity's id
 @param component_type: Type of the component
 */
-void ECSManager::remove_component(const unsigned entity, const ComponentType &component)
+void EntityManager::remove_component(const unsigned entity, const ComponentType &component)
 {
     switch (component)
     {
@@ -83,7 +83,7 @@ void ECSManager::remove_component(const unsigned entity, const ComponentType &co
 Get the entity mask of the given entity
 @param entity: Entity's id
 */
-[[nodiscard]] unsigned ECSManager::get_entity_mask(const unsigned entity) const
+[[nodiscard]] unsigned EntityManager::get_entity_mask(const unsigned entity) const
 {
     auto it = entity_masks.find(entity);
     if (it != entity_masks.end())
@@ -95,25 +95,25 @@ Get the entity mask of the given entity
 }
 
 // Get all entities masks
-[[nodiscard]] std::unordered_map<unsigned, unsigned> ECSManager::get_masks() const
+[[nodiscard]] std::unordered_map<unsigned, unsigned> EntityManager::get_masks() const
 {
     return entity_masks;
 }
 
 // Get all physics components
-[[nodiscard]] std::unordered_map<unsigned, PhysicsComponent> &ECSManager::get_physics()
+[[nodiscard]] std::unordered_map<unsigned, PhysicsComponent> &EntityManager::get_physics()
 {
     return physics_components;
 }
 
 // Get all transform components
-[[nodiscard]] std::unordered_map<unsigned, TransformComponent> &ECSManager::get_transforms()
+[[nodiscard]] std::unordered_map<unsigned, TransformComponent> &EntityManager::get_transforms()
 {
     return transform_components;
 }
 
 // Get all render components
-[[nodiscard]] std::unordered_map<unsigned, RenderComponent> &ECSManager::get_renders()
+[[nodiscard]] std::unordered_map<unsigned, RenderComponent> &EntityManager::get_renders()
 {
     return render_components;
 }

@@ -8,7 +8,9 @@ Class that will render the rendering of a scene
 */
 RenderSystem::RenderSystem(const unsigned shader,
                            const std::shared_ptr<GLFWwindow> &window,
-                           const std::shared_ptr<ECSManager> &ecs) : shader(shader), window(window), ecs(ecs)
+                           const std::shared_ptr<EntityManager> &entity_manager) : shader(shader),
+                                                                                   window(window),
+                                                                                   entity_manager(entity_manager)
 {
     // Make sure we use the shader to find uniforms
     glUseProgram(shader);
@@ -46,14 +48,14 @@ const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const
 // Render the scene
 void RenderSystem::render()
 {
-    auto &transform_components = ecs->get_transforms();
-    auto &render_components = ecs->get_renders();
+    auto &transform_components = entity_manager->get_transforms();
+    auto &render_components = entity_manager->get_renders();
 
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw entities
-    for (const auto &[entity, mask] : ecs->get_masks())
+    for (const auto &[entity, mask] : entity_manager->get_masks())
     {
         // Check for RenderComponent and TransformComponent
         if ((mask & static_cast<unsigned>(ComponentType::TRANSFORM)) &&

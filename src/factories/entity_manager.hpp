@@ -8,7 +8,7 @@
 /*
 Class that handles entities and their components
 */
-class ECSManager
+class EntityManager
 {
 public:
     // Create an entity and return its id

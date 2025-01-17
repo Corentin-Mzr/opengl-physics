@@ -6,16 +6,6 @@
 
 struct TransformComponent {
     glm::vec3 position, eulers, scale;
-
-    friend std::ostream &operator<<(std::ostream& os, const TransformComponent &t)
-    {
-        os << "Transform(" 
-           << "pos=(x=" << t.position.x << ", y=" << t.position.y << ", z=" << t.position.z << "), "
-           << "euler=(x=" << t.eulers.x << ", y=" << t.eulers.y << ", z=" << t.eulers.z << "), "
-           << "scale=(x=" << t.scale.x << ", y=" << t.scale.y << ", z=" << t.scale.z << ")"
-           << ")";
-        return os;
-    }
 };
 
 struct PhysicsComponent {

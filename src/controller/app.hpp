@@ -14,7 +14,7 @@
 #include "shader_factory.hpp"
 #include "mesh_factory.hpp"
 
-#include "ecs_manager.hpp"
+#include "entity_manager.hpp"
 
 /* 
 App class that will create a resizable window
@@ -46,7 +46,7 @@ private:
     PhysicsSystem physics_system;
     CameraSystem camera_system;
     ShaderFactory shader_factory;
-    std::shared_ptr<ECSManager> ecs_manager = nullptr;
+    std::shared_ptr<EntityManager> entity_manager = nullptr;
 
     // Initialize GLFW, if fail throw a std::runtime_error exception
     void setup_glfw();

@@ -7,7 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "ecs_manager.hpp"
+#include "entity_manager.hpp"
 #include "mesh_factory.hpp"
 
 /*
@@ -20,7 +20,7 @@ class RenderSystem
 {
 public:
     RenderSystem() = default;
-    RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window_ptr, const std::shared_ptr<ECSManager> &ecs);
+    RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window_ptr, const std::shared_ptr<EntityManager> &entity_manager);
     RenderSystem(const RenderSystem &) = delete;
     ~RenderSystem();
 
@@ -36,7 +36,7 @@ public:
 private:
     unsigned int shader = 0;
     std::shared_ptr<GLFWwindow> window = nullptr;
-    std::shared_ptr<ECSManager> ecs = nullptr;
+    std::shared_ptr<EntityManager> entity_manager = nullptr;
 
     int pos_loc = 0;
     int euler_loc = 0;

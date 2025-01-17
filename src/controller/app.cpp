@@ -148,11 +148,11 @@ void App::setup_systems()
     glUseProgram(shader);
 
     // ECS must be initialized before render system
-    if (ecs_manager == nullptr)
-        ecs_manager = std::make_shared<ECSManager>();
+    if (entity_manager == nullptr)
+        entity_manager = std::make_shared<EntityManager>();
     
     // TODO: INITIALIZE RENDER SYSTEM
-    render_system = RenderSystem(shader, window, ecs_manager);
+    render_system = RenderSystem(shader, window, entity_manager);
     camera_system = CameraSystem(shader, window);
 }
 
@@ -160,28 +160,28 @@ void App::setup_systems()
 void App::setup_scene()
 {
     /* ENTITY 1 : CUBE */
-    unsigned entity = ecs_manager->create_entity();
+    unsigned entity = entity_manager->create_entity();
     TransformComponent transform;
     RenderComponent render;
 
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
     transform.scale = {1.0f, 1.0f, 1.0f};
-    ecs_manager->add_component(entity, transform);
+    entity_manager->add_component(entity, transform);
 
     render.object_type = ObjectType::CUBE;
-    ecs_manager->add_component(entity, render);
+    entity_manager->add_component(entity, render);
 
     /* ENTITY 2 : SPHERE */
-    entity = ecs_manager->create_entity();
+    entity = entity_manager->create_entity();
 
     transform.position = {1.0f, 0.0f, 1.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
     transform.scale = {1.0f, 1.0f, 1.0f};
-    ecs_manager->add_component(entity, transform);
+    entity_manager->add_component(entity, transform);
 
     render.object_type = ObjectType::SPHERE;
-    ecs_manager->add_component(entity, render);
+    entity_manager->add_component(entity, render);
 }
 
 // Process input each frame
