@@ -58,9 +58,18 @@ void CameraSystem::update()
 /*
 Move the camera in space
 @param dpos: Linear displacement (from key inputs)
+@param is_vertical: True if space key or crouch key are pressed
 */
-void CameraSystem::move(const glm::vec3 &dpos)
+void CameraSystem::move(const glm::vec3 &dpos, const bool is_vertical, const bool is_horizontal)
 {
+    glm::vec3 up{0.0f, 0.0f, 0.0f};
+    if (is_vertical && !is_horizontal)
+        up = world_up;
+    else if (is_vertical && is_horizontal)
+        up = glm::normalize(this->up + world_up);
+    else if (is_horizontal)
+        up = this->up;
+
     position += forwards * dpos.x;
     position += up * dpos.y;
     position += right * dpos.z;

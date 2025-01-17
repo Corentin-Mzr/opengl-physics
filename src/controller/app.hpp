@@ -38,6 +38,7 @@ private:
     const char* title = nullptr;
     unsigned width = 0, height = 0;
     unsigned shader = 0;
+    double physics_dt = 0.01f;
     bool keys[1024] = {false};
     double xpos = 0.0, ypos = 0.0, xoffset = 0.0, yoffset = 0.0;
     bool first_motion = true;

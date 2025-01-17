@@ -27,8 +27,9 @@ public:
     /*
     Move the camera in space
     @param dpos: Linear displacement (from key inputs)
+    @param is_vertical: True if space key or crouch key are pressed
     */
-    void move(const glm::vec3 &dpos);
+    void move(const glm::vec3 &dpos, const bool is_vertical, const bool is_horizontal);
 
     /*
     Orientate the camera

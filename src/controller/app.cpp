@@ -56,6 +56,7 @@ void App::run()
 
         glfwPollEvents();
         process_input(dt);
+        physics_system.update(physics_dt);
         camera_system.update();
         render_system.render();
     }
@@ -152,6 +153,7 @@ void App::setup_systems()
         entity_manager = std::make_shared<EntityManager>();
     
     // TODO: INITIALIZE RENDER SYSTEM
+    physics_system = PhysicsSystem(entity_manager);
     render_system = RenderSystem(shader, window, entity_manager);
     camera_system = CameraSystem(shader, window);
 }
@@ -163,6 +165,7 @@ void App::setup_scene()
     unsigned entity = entity_manager->create_entity();
     TransformComponent transform;
     RenderComponent render;
+    PhysicsComponent physics;
 
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
@@ -172,16 +175,26 @@ void App::setup_scene()
     render.object_type = ObjectType::CUBE;
     entity_manager->add_component(entity, render);
 
+    physics.linear_velocity = {0.0f, 0.0f, 0.0f};
+    physics.angular_velocity = {20.0f, 4.0f, -3.0f};
+    physics.is_gravity_applied = false;
+    entity_manager->add_component(entity, physics);
+
     /* ENTITY 2 : SPHERE */
     entity = entity_manager->create_entity();
 
-    transform.position = {1.0f, 0.0f, 1.0f};
+    transform.position = {2.0f, 0.0f, 2.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
-    transform.scale = {1.0f, 1.0f, 1.0f};
+    transform.scale = {0.5f, 0.5f, 0.5f};
     entity_manager->add_component(entity, transform);
 
     render.object_type = ObjectType::SPHERE;
     entity_manager->add_component(entity, render);
+
+    physics.linear_velocity = {0.0f, 0.0f, 0.0f};
+    physics.angular_velocity = {0.0f, 45.0f, 0.0f};
+    physics.is_gravity_applied = false;
+    entity_manager->add_component(entity, physics);
 }
 
 // Process input each frame
@@ -191,32 +204,52 @@ void App::process_input(const double dt)
     glm::vec3 deulers{0.0f, 0.0f, 0.0f};
     float speed_factor = 1.0f;
     float mouse_sensivity = 20.0f;
+    bool is_vertical = false;
+    bool is_horizontal = false;
 
     /* ------ KEYBOARD CONTROLS ------ */
 
     // Front
     if (keys[GLFW_KEY_O])
+    {
         dpos.x += 1.0f;
+        is_horizontal = true;
+    }
 
     // Back
     if (keys[GLFW_KEY_L])
+    {
         dpos.x -= 1.0f;
+        is_horizontal = true;
+    }
 
     // Right
     if (keys[GLFW_KEY_SEMICOLON])
+    {
         dpos.z += 1.0f;
+        is_horizontal = true;
+    }
 
     // Left
     if (keys[GLFW_KEY_K])
+    {
         dpos.z -= 1.0f;
+        is_horizontal = true;
+    }
 
     // Up
     if (keys[GLFW_KEY_SPACE])
+    {
         dpos.y += 1.0f;
+        is_vertical = true;
+    }
 
     // Down
     if (keys[GLFW_KEY_M])
+    {
         dpos.y -= 1.0f;
+        is_vertical = true;
+    }
 
     // Sprint
     if (keys[GLFW_KEY_J])
@@ -227,7 +260,7 @@ void App::process_input(const double dt)
     dpos *= speed_factor;
     dpos *= dt;
 
-    camera_system.move(dpos);
+    camera_system.move(dpos, is_vertical, is_horizontal);
 
     /* ------ MOUSE CONTROLS ------ */
 

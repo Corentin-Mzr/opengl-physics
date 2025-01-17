@@ -14,7 +14,7 @@
 Class that will handle the rendering of a scene
 @param shader: Shader to use
 @param window: Window on which render the scene, as a std::shared_ptr<GLFWwindow>
-@param ecs: ECS Manager
+@param entity_manager: Handles entity creation
 */
 class RenderSystem
 {

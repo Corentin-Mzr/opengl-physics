@@ -1,10 +1,10 @@
 #include "render_system.hpp"
 
 /*
-Class that will render the rendering of a scene
+Class that will handle the rendering of a scene
 @param shader: Shader to use
 @param window: Window on which render the scene, as a std::shared_ptr<GLFWwindow>
-@param ecs: ECS Manager
+@param entity_manager: Handles entity creation
 */
 RenderSystem::RenderSystem(const unsigned shader,
                            const std::shared_ptr<GLFWwindow> &window,
