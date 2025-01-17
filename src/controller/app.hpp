@@ -41,7 +41,6 @@ private:
     bool keys[1024] = {false};
     double xpos = 0.0, ypos = 0.0, xoffset = 0.0, yoffset = 0.0;
     bool first_motion = true;
-    float dt = 0.01f;
     RenderSystem render_system;
     PhysicsSystem physics_system;
     CameraSystem camera_system;

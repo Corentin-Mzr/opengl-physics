@@ -272,8 +272,8 @@ void App::mouse_callback(GLFWwindow *window, double xposin, double yposin)
         app->first_motion = false;
     }
 
-    app->xoffset = xposin - app->xpos;
-    app->yoffset = app->ypos - yposin;
+    app->xoffset += xposin - app->xpos;
+    app->yoffset += app->ypos - yposin;
 
     app->xpos = xposin;
     app->ypos = yposin;
