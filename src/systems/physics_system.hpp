@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include <glm/gtc/quaternion.hpp>
+
 #include "entity_manager.hpp"
 
 /*
@@ -22,4 +24,17 @@ private:
     glm::vec3 gravity{0.0f, -9.81f, 0.0f};
 
     std::shared_ptr<EntityManager> entity_manager = nullptr;
+
+    /*
+    Returns the dimensions of a cuboid using its collider component, in local space
+    @param collider: Cuboid's ColliderComponent
+    */
+    glm::vec3 get_local_cuboid_dimensions(const ColliderComponent &collider);
+
+    /*
+    Retrieve the inverse inertia matrix using a ColliderComponent
+    @param collider: Collider component
+    @param mass: Cuboid's mass
+    */
+    glm::mat3 get_inverse_inertia_tensor(const ColliderComponent &collider, const float mass);
 };

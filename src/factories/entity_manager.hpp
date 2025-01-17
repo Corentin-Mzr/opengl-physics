@@ -36,6 +36,13 @@ public:
     void add_component(const unsigned entity, const RenderComponent &component);
 
     /*
+    Add a ColliderComponent to an entity
+    @param entity: Entity's id
+    @param component: Collider component
+    */
+    void add_component(const unsigned entity, const ColliderComponent &component);
+
+    /*
     Remove a component from an entity
     @param entity: Entity's id
     @param component_type: Type of the component
@@ -60,11 +67,15 @@ public:
     // Get all render components
     [[nodiscard]] std::unordered_map<unsigned, RenderComponent> &get_renders();
 
+    // Get all collider components
+    [[nodiscard]] std::unordered_map<unsigned, ColliderComponent> &get_colliders();
+
 private:
     std::unordered_map<unsigned, unsigned> entity_masks;
     std::unordered_map<unsigned, PhysicsComponent> physics_components;
     std::unordered_map<unsigned, TransformComponent> transform_components;
     std::unordered_map<unsigned, RenderComponent> render_components;
+    std::unordered_map<unsigned, ColliderComponent> collider_components;
 
     unsigned entity_count = 0;
 };

@@ -166,6 +166,7 @@ void App::setup_scene()
     TransformComponent transform;
     RenderComponent render;
     PhysicsComponent physics;
+    ColliderComponent collider;
 
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
@@ -175,10 +176,12 @@ void App::setup_scene()
     render.object_type = ObjectType::CUBE;
     entity_manager->add_component(entity, render);
 
-    physics.linear_velocity = {0.0f, 0.0f, 0.0f};
-    physics.angular_velocity = {20.0f, 4.0f, -3.0f};
-    physics.is_gravity_applied = false;
+    physics.is_static = false;
+    physics.forces = {0.0f, 0.0f, 0.0f};
+    physics.torque = {-5.0f, 3.0f, 10.0f};
     entity_manager->add_component(entity, physics);
+
+    entity_manager->add_component(entity, collider);
 
     /* ENTITY 2 : SPHERE */
     entity = entity_manager->create_entity();
@@ -191,10 +194,12 @@ void App::setup_scene()
     render.object_type = ObjectType::SPHERE;
     entity_manager->add_component(entity, render);
 
-    physics.linear_velocity = {0.0f, 0.0f, 0.0f};
-    physics.angular_velocity = {0.0f, 45.0f, 0.0f};
-    physics.is_gravity_applied = false;
+    physics.is_static = false;
+    physics.forces = {0.0f, 0.0f, 0.0f};
+    physics.torque = {0.0f, 10.0f, 0.0f};
     entity_manager->add_component(entity, physics);
+
+    entity_manager->add_component(entity, collider);
 }
 
 // Process input each frame

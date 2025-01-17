@@ -43,6 +43,17 @@ void EntityManager::add_component(const unsigned entity, const RenderComponent &
 }
 
 /*
+Add a ColliderComponent to an entity
+@param entity: Entity's id
+@param component: Collider component
+*/
+void EntityManager::add_component(const unsigned entity, const ColliderComponent &component)
+{
+    collider_components[entity] = component;
+    entity_masks[entity] |= static_cast<unsigned>(ComponentType::COLLIDER);
+}
+
+/*
 Remove a component from an entity
 @param entity: Entity's id
 @param component_type: Type of the component
@@ -70,6 +81,13 @@ void EntityManager::remove_component(const unsigned entity, const ComponentType 
         auto it = render_components.find(entity);
         if (it != render_components.end())
             render_components.erase(it);
+        break;
+    }
+    case ComponentType::COLLIDER:
+    {
+        auto it = collider_components.find(entity);
+        if (it != collider_components.end())
+            collider_components.erase(it);
         break;
     }
     default:
@@ -116,4 +134,10 @@ Get the entity mask of the given entity
 [[nodiscard]] std::unordered_map<unsigned, RenderComponent> &EntityManager::get_renders()
 {
     return render_components;
+}
+
+// Get all collider components
+[[nodiscard]] std::unordered_map<unsigned, ColliderComponent> &EntityManager::get_colliders()
+{
+    return collider_components;
 }
