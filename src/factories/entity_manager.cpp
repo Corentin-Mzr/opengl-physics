@@ -1,9 +1,9 @@
 #include "entity_manager.hpp"
 
 // Create an entity and return its id
-[[nodiscard]] unsigned int EntityManager::create_entity()
+[[nodiscard]] unsigned EntityManager::create_entity() noexcept
 {
-    unsigned int entity_id = entity_count;
+    unsigned entity_id = entity_count;
     entity_masks[entity_id] = 0;
     entity_count++;
     return entity_id;
@@ -101,9 +101,9 @@ void EntityManager::remove_component(const unsigned entity, const ComponentType 
 Get the entity mask of the given entity
 @param entity: Entity's id
 */
-[[nodiscard]] unsigned EntityManager::get_entity_mask(const unsigned entity) const
+[[nodiscard]] unsigned EntityManager::get_entity_mask(const unsigned entity) const noexcept
 {
-    auto it = entity_masks.find(entity);
+    const auto it = entity_masks.find(entity);
     if (it != entity_masks.end())
         return entity_masks.at(entity);
 
@@ -113,31 +113,31 @@ Get the entity mask of the given entity
 }
 
 // Get all entities masks
-[[nodiscard]] std::unordered_map<unsigned, unsigned> EntityManager::get_masks() const
+[[nodiscard]] std::unordered_map<unsigned, unsigned> EntityManager::get_masks() const noexcept
 {
     return entity_masks;
 }
 
 // Get all physics components
-[[nodiscard]] std::unordered_map<unsigned, PhysicsComponent> &EntityManager::get_physics()
+[[nodiscard]] std::unordered_map<unsigned, PhysicsComponent> &EntityManager::get_physics() noexcept
 {
     return physics_components;
 }
 
 // Get all transform components
-[[nodiscard]] std::unordered_map<unsigned, TransformComponent> &EntityManager::get_transforms()
+[[nodiscard]] std::unordered_map<unsigned, TransformComponent> &EntityManager::get_transforms() noexcept
 {
     return transform_components;
 }
 
 // Get all render components
-[[nodiscard]] std::unordered_map<unsigned, RenderComponent> &EntityManager::get_renders()
+[[nodiscard]] std::unordered_map<unsigned, RenderComponent> &EntityManager::get_renders() noexcept
 {
     return render_components;
 }
 
 // Get all collider components
-[[nodiscard]] std::unordered_map<unsigned, ColliderComponent> &EntityManager::get_colliders()
+[[nodiscard]] std::unordered_map<unsigned, ColliderComponent> &EntityManager::get_colliders() noexcept
 {
     return collider_components;
 }

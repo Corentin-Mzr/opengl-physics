@@ -4,7 +4,7 @@
 Class that will handle the physics of objects in a scene
 @param entity_manager: Handles entity creation
 */
-PhysicsSystem::PhysicsSystem(const std::shared_ptr<EntityManager> &entity_manager) : entity_manager(entity_manager)
+PhysicsSystem::PhysicsSystem(const std::shared_ptr<EntityManager> entity_manager) : entity_manager(entity_manager)
 {
 }
 

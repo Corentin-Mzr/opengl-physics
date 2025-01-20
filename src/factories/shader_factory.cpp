@@ -76,7 +76,7 @@ Make a shader module
     }
 
     // Convert to char*
-    std::string shader_source = buffer.str();
+    const std::string shader_source = buffer.str();
     const char *shader_src = shader_source.c_str();
 
     // Create and compile the shader module

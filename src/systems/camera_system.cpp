@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-CameraSystem::CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window) : shader(shader), window(window)
+CameraSystem::CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> window) : shader(shader), window(window)
 {
     // To compute aspect ratio
     int width, height;

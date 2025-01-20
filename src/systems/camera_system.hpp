@@ -18,7 +18,7 @@ class CameraSystem
 
 public:
     CameraSystem() = default;
-    CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window);
+    CameraSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> window);
     CameraSystem(CameraSystem &) = delete;
 
     // Update the camera

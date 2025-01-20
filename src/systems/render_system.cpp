@@ -7,8 +7,8 @@ Class that will handle the rendering of a scene
 @param entity_manager: Handles entity creation
 */
 RenderSystem::RenderSystem(const unsigned shader,
-                           const std::shared_ptr<GLFWwindow> &window,
-                           const std::shared_ptr<EntityManager> &entity_manager) : shader(shader),
+                           const std::shared_ptr<GLFWwindow> window,
+                           const std::shared_ptr<EntityManager> entity_manager) : shader(shader),
                                                                                    window(window),
                                                                                    entity_manager(entity_manager)
 {
@@ -30,17 +30,8 @@ RenderSystem::RenderSystem(const unsigned shader,
     build_meshes();
 }
 
-RenderSystem::~RenderSystem()
-{
-    // for (auto [i, mesh]: meshes)
-    // {
-    //     glDeleteVertexArrays(1, &mesh.vao);
-    //     glDeleteBuffers(1, &mesh.vbo);
-    // }
-}
-
 // For cleanup
-const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const
+const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const noexcept
 {
     return meshes;
 }

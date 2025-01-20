@@ -20,9 +20,8 @@ class RenderSystem
 {
 public:
     RenderSystem() = default;
-    RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> &window_ptr, const std::shared_ptr<EntityManager> &entity_manager);
+    RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> window_ptr, const std::shared_ptr<EntityManager> entity_manager);
     RenderSystem(const RenderSystem &) = delete;
-    ~RenderSystem();
 
     // Render the scene
     void render();
@@ -31,7 +30,7 @@ public:
     void simple_render();
 
     // For cleanup
-    const std::unordered_map<unsigned, Mesh>& get_meshes() const;
+    const std::unordered_map<unsigned, Mesh>& get_meshes() const noexcept;
 
 private:
     unsigned int shader = 0;
