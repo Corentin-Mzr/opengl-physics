@@ -21,7 +21,6 @@ class RenderSystem
 public:
     RenderSystem() = default;
     RenderSystem(const unsigned shader, const std::shared_ptr<GLFWwindow> window_ptr, const std::shared_ptr<EntityManager> entity_manager);
-    RenderSystem(const RenderSystem &) = delete;
 
     // Render the scene
     void render();

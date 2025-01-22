@@ -62,16 +62,16 @@ Move the camera in space
 */
 void CameraSystem::move(const glm::vec3 &dpos, const bool is_vertical, const bool is_horizontal)
 {
-    glm::vec3 up{0.0f, 0.0f, 0.0f};
+    glm::vec3 cam_up{0.0f, 0.0f, 0.0f};
     if (is_vertical && !is_horizontal)
-        up = world_up;
+        cam_up = world_up;
     else if (is_vertical && is_horizontal)
-        up = glm::normalize(this->up + world_up);
+        cam_up = glm::normalize(this->up + world_up);
     else if (is_horizontal)
-        up = this->up;
+        cam_up = this->up;
 
     position += forwards * dpos.x;
-    position += up * dpos.y;
+    position += cam_up * dpos.y;
     position += right * dpos.z;
 }
 

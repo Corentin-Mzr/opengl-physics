@@ -15,7 +15,6 @@ class PhysicsSystem
 public:
     PhysicsSystem() = default;
     PhysicsSystem(const std::shared_ptr<EntityManager> entity_manager);
-    PhysicsSystem(const PhysicsSystem &) = delete;
 
     // Update physics
     void update(const float dt);

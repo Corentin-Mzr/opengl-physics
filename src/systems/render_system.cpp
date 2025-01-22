@@ -101,7 +101,7 @@ void RenderSystem::build_meshes()
 {
     std::cout << "[RENDER SYSTEM INFO] Building meshes\n";
 
-    for (size_t i = 0; i < OBJECT_TYPE_COUNT; ++i)
+    for (unsigned i = 0; i < OBJECT_TYPE_COUNT; ++i)
     {
         meshes[i] = mesh_factory.load_mesh(i);
         if (meshes[i].vao == 0 || meshes[i].vertex_count == 0)
