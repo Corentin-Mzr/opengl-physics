@@ -260,7 +260,7 @@ Create a mesh using the given data
     glBindVertexArray(0);
 
     // Vertex count
-    vertex_count = positions.size() / 3;
+    vertex_count = static_cast<unsigned>(positions.size()) / 3;
 
     // Store mesh
     return Mesh{vao, vbo_pos, 0, vertex_count};

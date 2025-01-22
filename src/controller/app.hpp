@@ -40,7 +40,7 @@ private:
     const char* title_ = nullptr;
     unsigned shader_ = 0;
     bool keys_[1024] = {false};
-    double xpos_ = 0.0, ypos_ = 0.0, xoffset_ = 0.0, yoffset_ = 0.0;
+    float xpos_ = 0.0, ypos_ = 0.0, xoffset_ = 0.0, yoffset_ = 0.0;
     bool first_motion_ = true;
     bool glfw_initialized_ = false;
     bool glad_initialized_ = false;
@@ -82,7 +82,7 @@ private:
     Process input each frame
     @param dt: Delta time
     */ 
-    void process_input(const double dt);
+    void process_input(const float dt);
 
     /*
     Handle window resizing

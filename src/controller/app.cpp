@@ -49,23 +49,23 @@ App::~App()
 void App::run()
 {
     // Measure time
-    double dt = 0.0f;
-    double previous_time = glfwGetTime();
-    double current_time = 0.0f;
-    double accumulator_dt = 0.0f;
-    const double physics_dt = 1.0f / 240.0f;
+    float dt = 0.0f;
+    float previous_time = static_cast<float>(glfwGetTime());
+    float current_time = 0.0f;
+    float accumulator_dt = 0.0f;
+    const float physics_dt = 1.0f / 240.0f;
 
     // Data for FPS
     std::string title_with_fps = std::string(title_) + " | FPS: 0";
     const size_t replace_index = title_with_fps.size() - 1;
-    double fps_previous = previous_time;
-    double fps_elapsed = 0.0f;
+    float fps_previous = previous_time;
+    float fps_elapsed = 0.0f;
     float frame_count = 0;
 
     // Main loop
     while (!glfwWindowShouldClose(window_.get()))
     {
-        current_time = glfwGetTime();
+        current_time = static_cast<float>(glfwGetTime());
         fps_elapsed = current_time - fps_previous;
 
         // FPS
@@ -248,7 +248,7 @@ void App::setup_scene()
 Process input each frame
 @param dt: Delta time
 */
-void App::process_input(const double dt)
+void App::process_input(const float dt)
 {
     /* ------ KEYBOARD CONTROLS ------ */
     // Front
@@ -362,17 +362,19 @@ Handle mouse motion
 void App::mouse_callback(GLFWwindow *window, double xposin, double yposin)
 {
     auto app = static_cast<App *>(glfwGetWindowUserPointer(window));
+    const float xposin_f = static_cast<float>(xposin);
+    const float yposin_f = static_cast<float>(yposin);
 
     if (app->first_motion_)
     {
-        app->xpos_ = xposin;
-        app->ypos_ = yposin;
+        app->xpos_ = xposin_f;
+        app->ypos_ = yposin_f;
         app->first_motion_ = false;
     }
 
-    app->xoffset_ += xposin - app->xpos_;
-    app->yoffset_ += app->ypos_ - yposin;
+    app->xoffset_ += xposin_f - app->xpos_;
+    app->yoffset_ += app->ypos_ - yposin_f;
 
-    app->xpos_ = xposin;
-    app->ypos_ = yposin;
+    app->xpos_ = xposin_f;
+    app->ypos_ = yposin_f;
 }
