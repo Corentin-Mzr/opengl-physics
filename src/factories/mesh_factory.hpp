@@ -53,12 +53,11 @@ private:
     /*
     Process the mesh
     @param mesh: The mesh
-    @param scene: Scene related to the mesh
     @param positions: Stores positions of all vertices
     @param uvs: Stores UV coords of all vertices
     @param normals: Stores normals of all vertices
     */
-    void process_mesh(const aiMesh *mesh, const aiScene *scene,
+    void process_mesh(const aiMesh *mesh,
                       std::vector<float> &positions,
                       std::vector<float> &uvs,
                       std::vector<float> &normals);
@@ -106,6 +105,6 @@ private:
     @param normals: Array containing the normals of vertices
     */
     [[nodiscard]] Mesh create_mesh(const std::vector<float> &positions,
-                                   const std::vector<float> &uvs,
-                                   const std::vector<float> &normals);
+                                   [[maybe_unused]] const std::vector<float> &uvs,
+                                   [[maybe_unused]] const std::vector<float> &normals);
 };

@@ -35,12 +35,14 @@ public:
 
 private:
     std::shared_ptr<GLFWwindow> window = nullptr;
-    const char* title = nullptr;
     unsigned width = 0, height = 0;
+    const char* title = nullptr;
     unsigned shader = 0;
     bool keys[1024] = {false};
     double xpos = 0.0, ypos = 0.0, xoffset = 0.0, yoffset = 0.0;
     bool first_motion = true;
+    bool glfw_initialized = false;
+    bool glad_initialized = false;
     RenderSystem render_system;
     PhysicsSystem physics_system;
     CameraSystem camera_system;
@@ -68,15 +70,35 @@ private:
     // Define everything in the scene
     void setup_scene();
 
-    // Process input each frame
+    /*
+    Process input each frame
+    @param dt: Delta time
+    */ 
     void process_input(const double dt);
 
-    // Handle window resizing
+    /*
+    Handle window resizing
+    @param window: Pointer to the window
+    @param width: Width of the window
+    @param height: Height of the window
+    */
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
-    // Handle key inputs
-    static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+    /*
+    Handle key inputs
+    @param window: Pointer to the window
+    @param key: Key code representing the key (ex: GLFW_KEY_...)
+    @param scancode: Hardware code that identifies the physical key.
+    @param action: GLFW_PRESS or GLFW_RELEASE
+    @param mods: Modifiers active (ex: GLFW_MOD_SHIFT)
+    */
+    static void key_callback(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods);
 
-    // Handle mouse motion
-    static void mouse_callback(GLFWwindow *window, double xposin, double yposin);
+    /*
+    Handle mouse motion
+    @param window: Pointer to the window
+    @param xposin: Mouse X position
+    @param yposin: Mouse Y position
+    */
+    static void mouse_callback([[maybe_unused]] GLFWwindow *window, double xposin, double yposin);
 };

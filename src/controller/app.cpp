@@ -19,25 +19,30 @@ App::App(const unsigned width, const unsigned height, const char *title) : width
 
 App::~App()
 {
-    // Delete shader
-    glDeleteProgram(shader);
-    std::cout << "[APP DESTRUCTION INFO] Deleted shader\n";
-
-    // Delete meshes
-    for (const auto &[i, mesh]: render_system.get_meshes())
+    // OpenGL functions wont work if GLAD is not loaded
+    if (glad_initialized)
     {
-        glDeleteVertexArrays(1, &mesh.vao);
-        glDeleteBuffers(1, &mesh.vbo);
-    }
-    std::cout << "[APP DESTRUCTION INFO] Deleted meshes\n";
+        // Delete shader
+        glDeleteProgram(shader);
+        std::cout << "[APP DESTRUCTION INFO] Deleted shader\n";
 
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR)
-    {
-        std::cout << "[APP DESTRUCTION ERROR] An error occured during App destructor call: " << error << std::endl;
+        // Delete meshes
+        for (const auto &[i, mesh] : render_system.get_meshes())
+        {
+            glDeleteVertexArrays(1, &mesh.vao);
+            glDeleteBuffers(1, &mesh.vbo);
+        }
+        std::cout << "[APP DESTRUCTION INFO] Deleted meshes\n";
+
+        GLenum error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            std::cout << "[APP DESTRUCTION ERROR] An error occured during App destructor call: " << error << std::endl;
+        }
     }
 
-    glfwTerminate();
+    if (glfw_initialized)
+        glfwTerminate();
 }
 
 // Run the app
@@ -48,13 +53,12 @@ void App::run()
     double previous_time = glfwGetTime();
     double current_time = 0.0f;
     double accumulator_dt = 0.0f;
-    double physics_dt = 1.0f / 240.0f;
+    const double physics_dt = 1.0f / 240.0f;
 
     // Data for FPS
     std::string title_with_fps = std::string(title) + " | FPS: 0";
-    size_t replace_index = title_with_fps.size() - 1;
+    const size_t replace_index = title_with_fps.size() - 1;
     double fps_previous = previous_time;
-    double fps_current = 0.0f;
     double fps_elapsed = 0.0f;
     float frame_count = 0;
 
@@ -76,7 +80,7 @@ void App::run()
             frame_count = 0;
         }
 
-        // 
+        // Compute delta time
         dt = current_time - previous_time;
         previous_time = current_time;
 
@@ -91,7 +95,7 @@ void App::run()
             accumulator_dt -= physics_dt;
             process_input(physics_dt);
         }
-        
+
         camera_system.update();
         render_system.render();
     }
@@ -108,6 +112,8 @@ void App::setup_glfw()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    glfw_initialized = true;
 }
 
 // Create the window
@@ -140,6 +146,8 @@ void App::setup_glad()
         glfwTerminate();
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+    glad_initialized = true;
 }
 
 // Define some OpenGL parameters (viewport, background color, ...)
@@ -186,8 +194,7 @@ void App::setup_systems()
     // ECS must be initialized before render system
     if (entity_manager == nullptr)
         entity_manager = std::make_shared<EntityManager>();
-    
-    // TODO: INITIALIZE RENDER SYSTEM
+
     physics_system = PhysicsSystem(entity_manager);
     render_system = RenderSystem(shader, window, entity_manager);
     camera_system = CameraSystem(shader, window);
@@ -237,7 +244,10 @@ void App::setup_scene()
     entity_manager->add_component(entity, collider);
 }
 
-// Process input each frame
+/*
+Process input each frame
+@param dt: Delta time
+*/ 
 void App::process_input(const double dt)
 {
     glm::vec3 dpos{0.0f, 0.0f, 0.0f};
@@ -311,14 +321,26 @@ void App::process_input(const double dt)
     xoffset = 0.0, yoffset = 0.0;
 }
 
-// Handle window resizing
-void App::framebuffer_size_callback(GLFWwindow *window, int width, int height)
+/*
+Handle window resizing
+@param window: Pointer to the window
+@param width: Width of the window
+@param height: Height of the window
+*/
+void App::framebuffer_size_callback([[maybe_unused]] GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
 
-// Handle key inputs
-void App::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+/*
+Handle key inputs
+@param window: Pointer to the window
+@param key: Key code representing the key (ex: GLFW_KEY_...)
+@param scancode: Hardware code that identifies the physical key.
+@param action: GLFW_PRESS or GLFW_RELEASE
+@param mods: Modifiers active (ex: GLFW_MOD_SHIFT)
+*/
+void App::key_callback(GLFWwindow *window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods)
 {
     auto app = static_cast<App *>(glfwGetWindowUserPointer(window));
 
@@ -333,7 +355,12 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
     }
 }
 
-// Handle mouse motion
+/*
+Handle mouse motion
+@param window: Pointer to the window
+@param xposin: Mouse X position
+@param yposin: Mouse Y position
+*/
 void App::mouse_callback(GLFWwindow *window, double xposin, double yposin)
 {
     auto app = static_cast<App *>(glfwGetWindowUserPointer(window));

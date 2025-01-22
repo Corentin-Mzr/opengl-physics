@@ -43,6 +43,16 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     ${CMAKE_SOURCE_DIR}/src/*.c
 )
 
+# Additional compile flags for GCC and Clang
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra -Werror -Wattributes)
+endif()
+
+# Additional compile flags for MSVC
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    add_compile_options(/W4 /WX)
+endif()
+
 # Create exe
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -53,7 +63,7 @@ target_include_directories(${PROJECT_NAME}
     ${DEPS_DIR}/glm/glm
     ${DEPS_DIR}/assimp/include
     ${DEPS_DIR}
-    
+
     ${CMAKE_SOURCE_DIR}/src/controller
     ${CMAKE_SOURCE_DIR}/src/systems
     ${CMAKE_SOURCE_DIR}/src/components

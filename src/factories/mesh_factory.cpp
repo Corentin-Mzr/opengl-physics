@@ -35,10 +35,11 @@ Mesh MeshFactory::load_mesh_from_file(const char *filepath, const unsigned objec
     Assimp::Importer import;
     const aiScene *scene = import.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-    // Check for loading erros
+    // Check for loading erros -> return empty mesh if coult not load
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cerr << "[MESH FACTORY LOADING ERROR] " << import.GetErrorString() << std::endl;
+        return Mesh{};
     }
 
     // Store directory (will be used for texture loading)
@@ -73,7 +74,7 @@ void MeshFactory::process_node(const aiNode *node, const aiScene *scene,
     for (unsigned int i = 0; i < node->mNumMeshes; ++i)
     {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        process_mesh(mesh, scene, positions, uvs, normals);
+        process_mesh(mesh, positions, uvs, normals);
     }
 
     // Proces all children' meshes
@@ -86,12 +87,11 @@ void MeshFactory::process_node(const aiNode *node, const aiScene *scene,
 /*
 Process the mesh
 @param mesh: The mesh
-@param scene: Scene related to the mesh
 @param positions: Stores positions of all vertices
 @param uvs: Stores UV coords of all vertices
 @param normals: Stores normals of all vertices
 */
-void MeshFactory::process_mesh(const aiMesh *mesh, const aiScene *scene,
+void MeshFactory::process_mesh(const aiMesh *mesh,
                                std::vector<float> &positions,
                                std::vector<float> &uvs,
                                std::vector<float> &normals)
@@ -220,8 +220,8 @@ Create a mesh using the given data
 @param normals: Array containing the normals of vertices
 */
 [[nodiscard]] Mesh MeshFactory::create_mesh(const std::vector<float> &positions,
-                                            const std::vector<float> &uvs,
-                                            const std::vector<float> &normals)
+                                            [[maybe_unused]] const std::vector<float> &uvs,
+                                            [[maybe_unused]] const std::vector<float> &normals)
 {
     unsigned int vao, vbo_pos, vertex_count;
 
