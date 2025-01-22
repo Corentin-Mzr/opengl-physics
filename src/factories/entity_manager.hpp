@@ -19,35 +19,35 @@ public:
     @param entity: Entity's id
     @param component: Physics component
     */
-    void add_component(const unsigned entity, const PhysicsComponent &component);
+    void add_component(const unsigned entity, const PhysicsComponent &component) noexcept;
 
     /*
     Add a TransformComponent to an entity
     @param entity: Entity's id
     @param component: Transform component
     */
-    void add_component(const unsigned entity, const TransformComponent &component);
+    void add_component(const unsigned entity, const TransformComponent &component) noexcept;
 
     /*
     Add a RenderComponent to an entity
     @param entity: Entity's id
     @param component: Render component
     */
-    void add_component(const unsigned entity, const RenderComponent &component);
+    void add_component(const unsigned entity, const RenderComponent &component) noexcept;
 
     /*
     Add a ColliderComponent to an entity
     @param entity: Entity's id
     @param component: Collider component
     */
-    void add_component(const unsigned entity, const ColliderComponent &component);
+    void add_component(const unsigned entity, const ColliderComponent &component) noexcept;
 
     /*
     Remove a component from an entity
     @param entity: Entity's id
     @param component_type: Type of the component
     */
-    void remove_component(const unsigned entity, const ComponentType &component_type);
+    void remove_component(const unsigned entity, const ComponentType &component_type) noexcept;
 
     /*
     Get the entity mask of the given entity
@@ -71,11 +71,19 @@ public:
     [[nodiscard]] std::unordered_map<unsigned, ColliderComponent> &get_colliders() noexcept;
 
 private:
-    std::unordered_map<unsigned, unsigned> entity_masks;
-    std::unordered_map<unsigned, PhysicsComponent> physics_components;
-    std::unordered_map<unsigned, TransformComponent> transform_components;
-    std::unordered_map<unsigned, RenderComponent> render_components;
-    std::unordered_map<unsigned, ColliderComponent> collider_components;
+    std::unordered_map<unsigned, unsigned> entity_masks_;
+    std::unordered_map<unsigned, PhysicsComponent> physics_components_;
+    std::unordered_map<unsigned, TransformComponent> transform_components_;
+    std::unordered_map<unsigned, RenderComponent> render_components_;
+    std::unordered_map<unsigned, ColliderComponent> collider_components_;
 
-    unsigned entity_count = 0;
+    unsigned entity_count_ = 0;
+
+    /*
+    Check if entity id is stored in the given component map
+    @param id: Entity's id
+    @param component_map: Map of components
+    */
+    template <typename T>
+    [[nodiscard]] bool key_exist(const unsigned id, const std::unordered_map<unsigned, T> &component_map) const noexcept;
 };

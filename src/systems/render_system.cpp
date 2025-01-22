@@ -8,22 +8,22 @@ Class that will handle the rendering of a scene
 */
 RenderSystem::RenderSystem(const unsigned shader,
                            const std::shared_ptr<GLFWwindow> window,
-                           const std::shared_ptr<EntityManager> entity_manager) : shader(shader),
-                                                                                   window(window),
-                                                                                   entity_manager(entity_manager)
+                           const std::shared_ptr<EntityManager> entity_manager) : shader_(shader),
+                                                                                   window_(window),
+                                                                                   entity_manager_(entity_manager)
 {
     // Make sure we use the shader to find uniforms
-    glUseProgram(shader);
-    pos_loc = glGetUniformLocation(shader, "position");
-    euler_loc = glGetUniformLocation(shader, "euler");
-    scale_loc = glGetUniformLocation(shader, "scale");
+    glUseProgram(shader_);
+    pos_loc_ = glGetUniformLocation(shader_, "position");
+    euler_loc_ = glGetUniformLocation(shader_, "euler");
+    scale_loc_ = glGetUniformLocation(shader_, "scale");
 
     // Check if uniforms are found
-    if (pos_loc == -1)
+    if (pos_loc_ == -1)
         std::cerr << "[RENDER SYSTEM ERROR] Uniform \"position\" not found\n";
-    if (euler_loc == -1)
+    if (euler_loc_ == -1)
         std::cerr << "[RENDER SYSTEM ERROR] Uniform \"euler\" not found\n";
-    if (scale_loc == -1)
+    if (scale_loc_ == -1)
         std::cerr << "[RENDER SYSTEM ERROR] Uniform \"scale\" not found\n";
 
     // Build meshes for use
@@ -33,20 +33,20 @@ RenderSystem::RenderSystem(const unsigned shader,
 // For cleanup
 const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const noexcept
 {
-    return meshes;
+    return meshes_;
 }
 
 // Render the scene
 void RenderSystem::render()
 {
-    auto &transform_components = entity_manager->get_transforms();
-    auto &render_components = entity_manager->get_renders();
+    auto &transform_components = entity_manager_->get_transforms();
+    auto &render_components = entity_manager_->get_renders();
 
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Draw entities
-    for (const auto &[entity, mask] : entity_manager->get_masks())
+    for (const auto &[entity, mask] : entity_manager_->get_masks())
     {
         // Check for RenderComponent and TransformComponent
         if ((mask & static_cast<unsigned>(ComponentType::TRANSFORM)) &&
@@ -54,12 +54,12 @@ void RenderSystem::render()
         {
             const TransformComponent &transform = transform_components[entity];
             const RenderComponent &render = render_components[entity];
-            const Mesh &mesh = meshes.at(static_cast<unsigned>(render.object_type));
+            const Mesh &mesh = meshes_.at(static_cast<unsigned>(render.object_type));
 
             // Data to send to create the model matrix
-            glUniform3fv(pos_loc, 1, glm::value_ptr(transform.position));
-            glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(transform.eulers)));
-            glUniform3fv(scale_loc, 1, glm::value_ptr(transform.scale));
+            glUniform3fv(pos_loc_, 1, glm::value_ptr(transform.position));
+            glUniform3fv(euler_loc_, 1, glm::value_ptr(glm::radians(transform.eulers)));
+            glUniform3fv(scale_loc_, 1, glm::value_ptr(transform.scale));
 
             // // Bind mesh and texture
             // glBindTexture(GL_TEXTURE_2D, render.material);
@@ -72,28 +72,28 @@ void RenderSystem::render()
     }
 
     // Display
-    glfwSwapBuffers(window.get());
+    glfwSwapBuffers(window_.get());
 }
 
 // Debug purpose only
 void RenderSystem::simple_render()
 {
-    const Mesh &mesh = meshes[0];
+    const Mesh &mesh = meshes_[0];
 
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Set uniforms
-    glUniform3fv(pos_loc, 1, glm::value_ptr(glm::vec3{0.0f, 0.0f, 0.0f}));
-    glUniform3fv(euler_loc, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, 0.0f, 0.0f})));
-    glUniform3fv(scale_loc, 1, glm::value_ptr(glm::vec3{1.0f, 1.0f, 1.0f}));
+    glUniform3fv(pos_loc_, 1, glm::value_ptr(glm::vec3{0.0f, 0.0f, 0.0f}));
+    glUniform3fv(euler_loc_, 1, glm::value_ptr(glm::radians(glm::vec3{0.0f, 0.0f, 0.0f})));
+    glUniform3fv(scale_loc_, 1, glm::value_ptr(glm::vec3{1.0f, 1.0f, 1.0f}));
 
     // Draw
     glBindVertexArray(mesh.vao);
     glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
 
     // Display
-    glfwSwapBuffers(window.get());
+    glfwSwapBuffers(window_.get());
 }
 
 // Build every mesh from the MeshFactory
@@ -103,11 +103,11 @@ void RenderSystem::build_meshes()
 
     for (unsigned i = 0; i < OBJECT_TYPE_COUNT; ++i)
     {
-        meshes[i] = mesh_factory.load_mesh(i);
-        if (meshes[i].vao == 0 || meshes[i].vertex_count == 0)
+        meshes_[i] = mesh_factory_.load_mesh(i);
+        if (meshes_[i].vao == 0 || meshes_[i].vertex_count == 0)
         {
             std::cerr << "[RENDER SYSTEM ERROR] Failed to load mesh for ObjectType " << i << std::endl;
-            meshes.erase(i);
+            meshes_.erase(i);
         }
         else
             std::cout << "[RENDER SYSTEM INFO] Mesh loaded for ObjectType " << i << std::endl;

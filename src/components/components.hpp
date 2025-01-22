@@ -4,6 +4,7 @@
 
 #include "entity_config.hpp"
 
+
 struct TransformComponent
 {
     glm::vec3 position, eulers, scale;

@@ -4,7 +4,7 @@
 Class that will handle the physics of objects in a scene
 @param entity_manager: Handles entity creation
 */
-PhysicsSystem::PhysicsSystem(const std::shared_ptr<EntityManager> entity_manager) : entity_manager(entity_manager)
+PhysicsSystem::PhysicsSystem(const std::shared_ptr<EntityManager> entity_manager) : entity_manager_(entity_manager)
 {
 }
 
@@ -14,11 +14,11 @@ Update physics
 */
 void PhysicsSystem::update(const float dt)
 {
-    auto &transform_components = entity_manager->get_transforms();
-    auto &physics_components = entity_manager->get_physics();
-    auto &collider_components = entity_manager->get_colliders();
+    auto &transform_components = entity_manager_->get_transforms();
+    auto &physics_components = entity_manager_->get_physics();
+    auto &collider_components = entity_manager_->get_colliders();
 
-    for (const auto &[entity, mask] : entity_manager->get_masks())
+    for (const auto &[entity, mask] : entity_manager_->get_masks())
     {
         // Check if entity has TransformComponent
         if (!(mask & static_cast<unsigned>(ComponentType::TRANSFORM)))
@@ -60,8 +60,6 @@ void PhysicsSystem::update(const float dt)
         orientation += 0.5f * angular_vel_quat * orientation * dt;
         orientation = glm::normalize(orientation);
         transform.eulers = glm::degrees(glm::eulerAngles(orientation));
-
-        // transform.eulers += physics.angular_velocity * dt;
     }
 }
 
@@ -69,7 +67,7 @@ void PhysicsSystem::update(const float dt)
 Returns the dimensions of a cuboid using its collider component, in local space
 @param collider: Cuboid's ColliderComponent
 */
-glm::vec3 PhysicsSystem::get_local_cuboid_dimensions(const ColliderComponent &collider)
+glm::vec3 PhysicsSystem::get_local_cuboid_dimensions(const ColliderComponent &collider) noexcept
 {
     return 2.0f * collider.half_size;
 }
@@ -82,7 +80,7 @@ Retrieve the inertia matrix using a ColliderComponent
 glm::mat3 PhysicsSystem::get_inverse_inertia_tensor(const ColliderComponent &collider, const float mass)
 {
     const glm::vec3 dims = get_local_cuboid_dimensions(collider);
-    glm::mat3 tensor = (1.0f / 12.0f * mass) * glm::mat3{
+    glm::mat3 tensor = (mass * 1.0f / 12.0f) * glm::mat3{
         glm::vec3{dims.y * dims.y + dims.z * dims.z, 0.0f, 0.0f}, 
         glm::vec3{0.0f, dims.x * dims.x + dims.z * dims.z, 0.0f}, 
         glm::vec3{0.0f, 0.0f, dims.x * dims.x + dims.y * dims.y}

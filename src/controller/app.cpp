@@ -6,7 +6,7 @@ App class that will create a resizable window
 @param height: Height of the window
 @param title: Title of the window
 */
-App::App(const unsigned width, const unsigned height, const char *title) : width(width), height(height), title(title)
+App::App(const unsigned width, const unsigned height, const char *title) : width_(width), height_(height), title_(title)
 {
     setup_glfw();
     setup_window();
@@ -20,14 +20,14 @@ App::App(const unsigned width, const unsigned height, const char *title) : width
 App::~App()
 {
     // OpenGL functions wont work if GLAD is not loaded
-    if (glad_initialized)
+    if (glad_initialized_)
     {
         // Delete shader
-        glDeleteProgram(shader);
+        glDeleteProgram(shader_);
         std::cout << "[APP DESTRUCTION INFO] Deleted shader\n";
 
         // Delete meshes
-        for (const auto &[i, mesh] : render_system.get_meshes())
+        for (const auto &[i, mesh] : render_system_.get_meshes())
         {
             glDeleteVertexArrays(1, &mesh.vao);
             glDeleteBuffers(1, &mesh.vbo);
@@ -41,7 +41,7 @@ App::~App()
         }
     }
 
-    if (glfw_initialized)
+    if (glfw_initialized_)
         glfwTerminate();
 }
 
@@ -56,14 +56,14 @@ void App::run()
     const double physics_dt = 1.0f / 240.0f;
 
     // Data for FPS
-    std::string title_with_fps = std::string(title) + " | FPS: 0";
+    std::string title_with_fps = std::string(title_) + " | FPS: 0";
     const size_t replace_index = title_with_fps.size() - 1;
     double fps_previous = previous_time;
     double fps_elapsed = 0.0f;
     float frame_count = 0;
 
     // Main loop
-    while (!glfwWindowShouldClose(window.get()))
+    while (!glfwWindowShouldClose(window_.get()))
     {
         current_time = glfwGetTime();
         fps_elapsed = current_time - fps_previous;
@@ -74,7 +74,7 @@ void App::run()
         else
         {
             title_with_fps.replace(replace_index, title_with_fps.size(), std::to_string(frame_count / fps_elapsed));
-            glfwSetWindowTitle(window.get(), title_with_fps.c_str());
+            glfwSetWindowTitle(window_.get(), title_with_fps.c_str());
             fps_elapsed = 0.0f;
             fps_previous = current_time;
             frame_count = 0;
@@ -91,13 +91,13 @@ void App::run()
 
         while (accumulator_dt >= physics_dt)
         {
-            physics_system.update(physics_dt);
+            physics_system_.update(physics_dt);
             accumulator_dt -= physics_dt;
             process_input(physics_dt);
         }
 
-        camera_system.update();
-        render_system.render();
+        camera_system_.update();
+        render_system_.render();
     }
 }
 
@@ -113,14 +113,14 @@ void App::setup_glfw()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfw_initialized = true;
+    glfw_initialized_ = true;
 }
 
 // Create the window
 void App::setup_window()
 {
     // Create a window
-    GLFWwindow *raw_window = glfwCreateWindow(width, height, title, NULL, NULL);
+    GLFWwindow *raw_window = glfwCreateWindow(width_, height_, title_, NULL, NULL);
     if (raw_window == nullptr)
     {
         glfwTerminate();
@@ -128,13 +128,13 @@ void App::setup_window()
     }
 
     // Need to use a custom deleter
-    window = std::shared_ptr<GLFWwindow>(raw_window, [](GLFWwindow *ptr)
-                                         { glfwDestroyWindow(ptr); });
+    window_ = std::shared_ptr<GLFWwindow>(raw_window, [](GLFWwindow *ptr)
+                                          { glfwDestroyWindow(ptr); });
 
-    glfwMakeContextCurrent(window.get());
+    glfwMakeContextCurrent(window_.get());
     glfwSwapInterval(1);
-    glfwSetWindowUserPointer(window.get(), this);
-    glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetWindowUserPointer(window_.get(), this);
+    glfwSetInputMode(window_.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 // Load GLAD
@@ -147,14 +147,14 @@ void App::setup_glad()
         throw std::runtime_error("Failed to initialize GLAD");
     }
 
-    glad_initialized = true;
+    glad_initialized_ = true;
 }
 
 // Define some OpenGL parameters (viewport, background color, ...)
 void App::setup_opengl()
 {
     // Set viewport
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, width_, height_);
 
     // Define background color
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -175,36 +175,36 @@ void App::setup_opengl()
 void App::setup_callbacks()
 {
     // Define viewport callback
-    glfwSetFramebufferSizeCallback(window.get(), framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window_.get(), framebuffer_size_callback);
 
     // Define input callback
-    glfwSetKeyCallback(window.get(), key_callback);
+    glfwSetKeyCallback(window_.get(), key_callback);
 
     // Define mouse callback
-    glfwSetCursorPosCallback(window.get(), mouse_callback);
+    glfwSetCursorPosCallback(window_.get(), mouse_callback);
 }
 
 // Set up some systems
 void App::setup_systems()
 {
     // Shader must be initialized before everything
-    shader = shader_factory.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
-    glUseProgram(shader);
+    shader_ = shader_factory_.load_shader("../shaders/vertex.glsl", "../shaders/fragment.glsl");
+    glUseProgram(shader_);
 
     // ECS must be initialized before render system
-    if (entity_manager == nullptr)
-        entity_manager = std::make_shared<EntityManager>();
+    if (entity_manager_ == nullptr)
+        entity_manager_ = std::make_shared<EntityManager>();
 
-    physics_system = PhysicsSystem(entity_manager);
-    render_system = RenderSystem(shader, window, entity_manager);
-    camera_system = CameraSystem(shader, window);
+    physics_system_ = PhysicsSystem(entity_manager_);
+    render_system_ = RenderSystem(shader_, window_, entity_manager_);
+    camera_system_ = CameraSystem(shader_, window_);
 }
 
 // Define everything in the scene
 void App::setup_scene()
 {
     /* ENTITY 1 : CUBE */
-    unsigned entity = entity_manager->create_entity();
+    unsigned entity = entity_manager_->create_entity();
     TransformComponent transform;
     RenderComponent render;
     PhysicsComponent physics;
@@ -213,96 +213,88 @@ void App::setup_scene()
     transform.position = {0.0f, 0.0f, 0.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
     transform.scale = {1.0f, 1.0f, 1.0f};
-    entity_manager->add_component(entity, transform);
+    entity_manager_->add_component(entity, transform);
 
     render.object_type = ObjectType::CUBE;
-    entity_manager->add_component(entity, render);
+    entity_manager_->add_component(entity, render);
 
     physics.is_static = false;
     physics.forces = {0.0f, 0.0f, 0.0f};
     physics.torque = {-5.0f, 3.0f, 10.0f};
-    entity_manager->add_component(entity, physics);
+    entity_manager_->add_component(entity, physics);
 
-    entity_manager->add_component(entity, collider);
+    entity_manager_->add_component(entity, collider);
 
     /* ENTITY 2 : SPHERE */
-    entity = entity_manager->create_entity();
+    entity = entity_manager_->create_entity();
 
     transform.position = {2.0f, 0.0f, 2.0f};
     transform.eulers = {0.0f, 0.0f, 0.0f};
     transform.scale = {0.5f, 0.5f, 0.5f};
-    entity_manager->add_component(entity, transform);
+    entity_manager_->add_component(entity, transform);
 
     render.object_type = ObjectType::SPHERE;
-    entity_manager->add_component(entity, render);
+    entity_manager_->add_component(entity, render);
 
     physics.is_static = false;
     physics.forces = {0.0f, 0.0f, 0.0f};
     physics.torque = {0.0f, 10.0f, 0.0f};
-    entity_manager->add_component(entity, physics);
+    entity_manager_->add_component(entity, physics);
 
-    entity_manager->add_component(entity, collider);
+    entity_manager_->add_component(entity, collider);
 }
 
 /*
 Process input each frame
 @param dt: Delta time
-*/ 
+*/
 void App::process_input(const double dt)
 {
-    glm::vec3 dpos{0.0f, 0.0f, 0.0f};
-    glm::vec3 deulers{0.0f, 0.0f, 0.0f};
-    float speed_factor = 1.0f;
-    float mouse_sensivity = 20.0f;
-    bool is_vertical = false;
-    bool is_horizontal = false;
-
     /* ------ KEYBOARD CONTROLS ------ */
-
     // Front
-    if (keys[GLFW_KEY_O])
+    if (keys_[GLFW_KEY_O])
     {
         dpos.x += 1.0f;
         is_horizontal = true;
     }
 
     // Back
-    if (keys[GLFW_KEY_L])
+    if (keys_[GLFW_KEY_L])
     {
         dpos.x -= 1.0f;
         is_horizontal = true;
     }
 
     // Right
-    if (keys[GLFW_KEY_SEMICOLON])
+    if (keys_[GLFW_KEY_SEMICOLON])
     {
         dpos.z += 1.0f;
         is_horizontal = true;
     }
 
     // Left
-    if (keys[GLFW_KEY_K])
+    if (keys_[GLFW_KEY_K])
     {
         dpos.z -= 1.0f;
         is_horizontal = true;
     }
 
     // Up
-    if (keys[GLFW_KEY_SPACE])
+    if (keys_[GLFW_KEY_SPACE])
     {
         dpos.y += 1.0f;
         is_vertical = true;
     }
 
     // Down
-    if (keys[GLFW_KEY_M])
+    if (keys_[GLFW_KEY_M])
     {
         dpos.y -= 1.0f;
         is_vertical = true;
     }
 
     // Sprint
-    if (keys[GLFW_KEY_J])
+    if (keys_[GLFW_KEY_J])
         speed_factor = 3.0f;
 
     if (glm::length(dpos) > 1.0f)
@@ -310,15 +302,21 @@ void App::process_input(const double dt)
     dpos *= speed_factor;
     dpos *= dt;
 
-    camera_system.move(dpos, is_vertical, is_horizontal);
+    camera_system_.move(dpos, is_vertical, is_horizontal);
 
     /* ------ MOUSE CONTROLS ------ */
 
-    deulers.y = xoffset * mouse_sensivity * dt;
-    deulers.z = yoffset * mouse_sensivity * dt;
+    deulers.y = xoffset_ * mouse_sensivity * dt;
+    deulers.z = yoffset_ * mouse_sensivity * dt;
+    camera_system_.spin(deulers);
 
-    camera_system.spin(deulers);
-    xoffset = 0.0, yoffset = 0.0;
+    /* ------ RESET VARIABLES ------ */
+    dpos = {0.0f, 0.0f, 0.0f};
+    deulers = {0.0f, 0.0f, 0.0f};
+    xoffset_ = 0.0, yoffset_ = 0.0;
+    speed_factor = 1.0f;
+    is_vertical = false;
+    is_horizontal = false;
 }
 
 /*
@@ -349,9 +347,9 @@ void App::key_callback(GLFWwindow *window, int key, [[maybe_unused]] int scancod
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
-            app->keys[key] = true;
+            app->keys_[key] = true;
         else if (action == GLFW_RELEASE)
-            app->keys[key] = false;
+            app->keys_[key] = false;
     }
 }
 
@@ -365,16 +363,16 @@ void App::mouse_callback(GLFWwindow *window, double xposin, double yposin)
 {
     auto app = static_cast<App *>(glfwGetWindowUserPointer(window));
 
-    if (app->first_motion)
+    if (app->first_motion_)
     {
-        app->xpos = xposin;
-        app->ypos = yposin;
-        app->first_motion = false;
+        app->xpos_ = xposin;
+        app->ypos_ = yposin;
+        app->first_motion_ = false;
     }
 
-    app->xoffset += xposin - app->xpos;
-    app->yoffset += app->ypos - yposin;
+    app->xoffset_ += xposin - app->xpos_;
+    app->yoffset_ += app->ypos_ - yposin;
 
-    app->xpos = xposin;
-    app->ypos = yposin;
+    app->xpos_ = xposin;
+    app->ypos_ = yposin;
 }

@@ -37,10 +37,15 @@ public:
     void spin(const glm::vec3 &deulers);
 
 private:
-    unsigned shader = 0;
-    std::shared_ptr<GLFWwindow> window = nullptr;
-    glm::vec3 position, eulers, forwards, right, up, world_up;
-    glm::mat4 projection;
-    glm::mat4 view_proj;
-    int view_proj_loc = 0;
+    unsigned shader_ = 0;
+    std::shared_ptr<GLFWwindow> window_ = nullptr;
+    glm::vec3 position_{0.0f};
+    glm::vec3 eulers_{0.0f};
+    glm::vec3 forwards_{0.0f};
+    glm::vec3 right_{0.0f}; 
+    glm::vec3 up_{0.0f};
+    glm::vec3 world_up_{0.0f};
+    glm::mat4 projection_{1.0f};
+    glm::mat4 view_proj_{1.0f};
+    int view_proj_loc_ = 0;
 };

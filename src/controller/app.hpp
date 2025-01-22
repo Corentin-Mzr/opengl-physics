@@ -28,26 +28,34 @@ public:
     App(const unsigned width, const unsigned height, const char* title);
     App(const App&) = delete;
     App& operator=(const App&) = delete;
+    App& operator=(App&& other) = delete;
     ~App();
 
     // Run the app
     void run();
 
 private:
-    std::shared_ptr<GLFWwindow> window = nullptr;
-    unsigned width = 0, height = 0;
-    const char* title = nullptr;
-    unsigned shader = 0;
-    bool keys[1024] = {false};
-    double xpos = 0.0, ypos = 0.0, xoffset = 0.0, yoffset = 0.0;
-    bool first_motion = true;
-    bool glfw_initialized = false;
-    bool glad_initialized = false;
-    RenderSystem render_system;
-    PhysicsSystem physics_system;
-    CameraSystem camera_system;
-    ShaderFactory shader_factory;
-    std::shared_ptr<EntityManager> entity_manager = nullptr;
+    std::shared_ptr<GLFWwindow> window_ = nullptr;
+    unsigned width_ = 0, height_ = 0;
+    const char* title_ = nullptr;
+    unsigned shader_ = 0;
+    bool keys_[1024] = {false};
+    double xpos_ = 0.0, ypos_ = 0.0, xoffset_ = 0.0, yoffset_ = 0.0;
+    bool first_motion_ = true;
+    bool glfw_initialized_ = false;
+    bool glad_initialized_ = false;
+    RenderSystem render_system_;
+    PhysicsSystem physics_system_;
+    CameraSystem camera_system_;
+    ShaderFactory shader_factory_;
+    std::shared_ptr<EntityManager> entity_manager_ = nullptr;
+
+    glm::vec3 dpos{0.0f, 0.0f, 0.0f};
+    glm::vec3 deulers{0.0f, 0.0f, 0.0f};
+    float speed_factor = 1.0f;
+    float mouse_sensivity = 20.0f;
+    bool is_vertical = false;
+    bool is_horizontal = false;
 
     // Initialize GLFW, if fail throw a std::runtime_error exception
     void setup_glfw();

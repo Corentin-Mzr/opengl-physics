@@ -15,20 +15,24 @@ class PhysicsSystem
 public:
     PhysicsSystem() = default;
     PhysicsSystem(const std::shared_ptr<EntityManager> entity_manager);
+    PhysicsSystem(const PhysicsSystem &) = default;
+    PhysicsSystem &operator=(const PhysicsSystem &) = default;
 
-    // Update physics
+    /*
+    Update physics
+    @param dt: Delta time
+    */
     void update(const float dt);
 
 private:
-    glm::vec3 gravity{0.0f, -9.81f, 0.0f};
-
-    std::shared_ptr<EntityManager> entity_manager = nullptr;
+    [[maybe_unused]] glm::vec3 gravity_{0.0f, -9.81f, 0.0f};
+    std::shared_ptr<EntityManager> entity_manager_ = nullptr;
 
     /*
     Returns the dimensions of a cuboid using its collider component, in local space
     @param collider: Cuboid's ColliderComponent
     */
-    glm::vec3 get_local_cuboid_dimensions(const ColliderComponent &collider);
+    glm::vec3 get_local_cuboid_dimensions(const ColliderComponent &collider) noexcept;
 
     /*
     Retrieve the inverse inertia matrix using a ColliderComponent

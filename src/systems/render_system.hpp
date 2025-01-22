@@ -32,18 +32,18 @@ public:
     const std::unordered_map<unsigned, Mesh>& get_meshes() const noexcept;
 
 private:
-    unsigned int shader = 0;
-    std::shared_ptr<GLFWwindow> window = nullptr;
-    std::shared_ptr<EntityManager> entity_manager = nullptr;
+    unsigned int shader_ = 0;
+    std::shared_ptr<GLFWwindow> window_ = nullptr;
+    std::shared_ptr<EntityManager> entity_manager_ = nullptr;
 
-    int pos_loc = 0;
-    int euler_loc = 0;
-    int scale_loc = 0;
+    int pos_loc_ = 0;
+    int euler_loc_ = 0;
+    int scale_loc_ = 0;
 
-    MeshFactory mesh_factory;
+    MeshFactory mesh_factory_;
 
     // Build every mesh from the MeshFactory
     void build_meshes();
 
-    std::unordered_map<unsigned, Mesh> meshes;
+    std::unordered_map<unsigned, Mesh> meshes_;
 };
