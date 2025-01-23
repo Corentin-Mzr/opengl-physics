@@ -7,7 +7,7 @@ Physics Engine using OpenGL.
 ### Prerequisites
 
 - C++/C compiler (gcc, g++, cl, clang)
-- CMake
+- CMake 3.16 or newer
 - OpenGL
 
 ### Clone the repository
@@ -31,7 +31,15 @@ From the root folder, execute the following commands
 
 ```bash
 mkdir build
-cd build
 cmake ..
-make
+cmake --build build
+```
+
+### Run the program
+
+To run the program, launch it from the build folder
+
+```bash
+cd build
+./OpenGL-Physics.exe
 ```
