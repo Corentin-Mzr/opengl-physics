@@ -9,8 +9,8 @@ Class that will handle the rendering of a scene
 RenderSystem::RenderSystem(const unsigned shader,
                            const std::shared_ptr<GLFWwindow> window,
                            const std::shared_ptr<EntityManager> entity_manager) : shader_(shader),
-                                                                                   window_(window),
-                                                                                   entity_manager_(entity_manager)
+                                                                                  window_(window),
+                                                                                  entity_manager_(entity_manager)
 {
     // Make sure we use the shader to find uniforms
     glUseProgram(shader_);
@@ -39,8 +39,8 @@ const std::unordered_map<unsigned, Mesh> &RenderSystem::get_meshes() const noexc
 // Render the scene
 void RenderSystem::render()
 {
-    auto &transform_components = entity_manager_->get_transforms();
-    auto &render_components = entity_manager_->get_renders();
+    const auto &transform_components = entity_manager_->get_transforms();
+    const auto &render_components = entity_manager_->get_renders();
 
     // Clear screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -48,27 +48,33 @@ void RenderSystem::render()
     // Draw entities
     for (const auto &[entity, mask] : entity_manager_->get_masks())
     {
-        // Check for RenderComponent and TransformComponent
-        if ((mask & static_cast<unsigned>(ComponentType::TRANSFORM)) &&
-            mask & static_cast<unsigned>(ComponentType::RENDER))
-        {
-            const TransformComponent &transform = transform_components[entity];
-            const RenderComponent &render = render_components[entity];
-            const Mesh &mesh = meshes_.at(static_cast<unsigned>(render.object_type));
+        // If RenderComponent or TransformComponent does not exist, skip
+        if (!(mask & static_cast<unsigned>(ComponentType::TRANSFORM)) || !(mask & static_cast<unsigned>(ComponentType::RENDER)))
+            continue;
 
-            // Data to send to create the model matrix
-            glUniform3fv(pos_loc_, 1, glm::value_ptr(transform.position));
-            glUniform3fv(euler_loc_, 1, glm::value_ptr(glm::radians(transform.eulers)));
-            glUniform3fv(scale_loc_, 1, glm::value_ptr(transform.scale));
+        // Else retrieve the components
+        const TransformComponent &transform = transform_components.at(entity);
+        const RenderComponent &render = render_components.at(entity);
 
-            // // Bind mesh and texture
-            // glBindTexture(GL_TEXTURE_2D, render.material);
+        // If Mesh is not created, skip
+        if (meshes_.find(static_cast<unsigned>(render.object_type)) == meshes_.end())
+            continue;
 
-            // Draw
-            glBindVertexArray(mesh.vao);
-            glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
-            // glDrawElements(GL_TRIANGLES, render.vertex_count, GL_UNSIGNED_INT, 0);
-        }
+        // Else retrieve the mesh
+        const Mesh &mesh = meshes_.at(static_cast<unsigned>(render.object_type));
+
+        // Data to send to create the model matrix
+        glUniform3fv(pos_loc_, 1, glm::value_ptr(transform.position));
+        glUniform3fv(euler_loc_, 1, glm::value_ptr(glm::radians(transform.eulers)));
+        glUniform3fv(scale_loc_, 1, glm::value_ptr(transform.scale));
+
+        // // Bind mesh and texture
+        // glBindTexture(GL_TEXTURE_2D, render.material);
+
+        // Draw
+        glBindVertexArray(mesh.vao);
+        glDrawArrays(GL_TRIANGLES, 0, mesh.vertex_count);
+        // glDrawElements(GL_TRIANGLES, render.vertex_count, GL_UNSIGNED_INT, 0);
     }
 
     // Display
